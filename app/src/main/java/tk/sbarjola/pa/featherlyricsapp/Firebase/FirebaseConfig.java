@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.firebase.client.Firebase;
 
@@ -45,7 +46,7 @@ public class FirebaseConfig extends Application {
 
         // Autologin
 
-        if (autologin) {
+        if (autologin && refUsuarioSp != null) {
             setReferenciaUsuarioLogeado(new Firebase(refUsuarioSp));
         }
     }
