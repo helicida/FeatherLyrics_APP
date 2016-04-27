@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String searchedArtist = "no artist";        // Nombre del artista seleccionado en discografia
     String searchedTrack = "no track";          // Nombre de la pista seleccionada en discografia
 
-    SharedPreferences preferencias;                     // Preferencias personalizadas
-    SharedPreferences.Editor sharedPreferencesEditor;   // SharedPreferenceEditor que usaremos para modificar las settings
+    SharedPreferences preferencias;                    // Preferencias personalizadas
+    SharedPreferences.Editor sharedPreferencesEditor;  // SharedPreferenceEditor que usaremos para modificar las settings
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

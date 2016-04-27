@@ -6,9 +6,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -16,6 +23,7 @@ import com.firebase.client.ValueEventListener;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.clustering.RadiusMarkerClusterer;
 import org.osmdroid.bonuspack.overlays.Marker;
+import org.osmdroid.bonuspack.overlays.MarkerInfoWindow;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -46,11 +54,39 @@ public class OSMap extends Fragment {
     private ScaleBarOverlay escalaOverlay;            // Barra que indica la escala del mapa
     private MyLocationNewOverlay miPosicionOverlay;   // Marcador de donde nos encontramos
     private RadiusMarkerClusterer marcadoresMensajes; // Cluster de los marcadores de los mensajes
+    private UserMarkerInfo userMarkerInfo;            // Envoltorio de usuarios
     FirebaseConfig config;                            // Configuración de firebase
 
     ArrayList<String> grupos = new ArrayList<>();        // Grupos escuchados por el usuario
     ArrayList<String> grupoContacto = new ArrayList<>(); // Grupo del otro contacto
-    String gruposEnComun = "";
+    String gruposEnComun = "";                           // Grupos en común con otro contacto
+
+    private class UserMarkerInfo extends MarkerInfoWindow {
+
+        public UserMarkerInfo(int layoutResId, final MapView mapView) {
+            super(layoutResId, mapView);
+        }
+
+        @Override
+        public void onOpen(Object item) {
+            Marker marker = (Marker) item;
+            final Usuario markerUsuario = (Usuario) marker.getRelatedObject();
+
+            super.onOpen(item);
+
+            closeAllInfoWindowsOn(map);
+
+            RelativeLayout layout = (RelativeLayout) getView().findViewById(R.id.map_bubble_layout);
+
+            layout.setClickable(true);
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    /* Haremos un intent a la activity del perfil de usuario */
+                }
+            });
+        }
+    }
 
     public OSMap() {
         // es necesario tener un constructor vacio
@@ -59,6 +95,8 @@ public class OSMap extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.setHasOptionsMenu(true);
 
         config = (FirebaseConfig) getActivity().getApplication();
 
@@ -94,50 +132,59 @@ public class OSMap extends Fragment {
         // Declaramos el mapa
         map = (MapView) view.findViewById(R.id.map);
 
-        // Ajustamos el mapa con los controles, los elementos a mostrar y el zoom deseado
-        ajustarMapa();
+        try{
+            // Ajustamos el mapa con los controles, los elementos a mostrar y el zoom deseado
+            ajustarMapa();
 
-        // Ponemos los marcadores
-        marcadoresMapa();
+            // Ponemos los marcadores
+            marcadoresMapa();
 
-        map.invalidate();
+            map.invalidate();
+
+            // Custom marker
+            userMarkerInfo = new UserMarkerInfo(R.layout.user_map_item, map);
+        }
+        catch (IllegalStateException e){}
 
         return view;
     }
 
     private void marcadoresMapa(){
 
-        // Declaramos un overlay con nuestra posicion
-        miPosicionOverlay = new MyLocationNewOverlay(
-                getContext(),
-                new GpsMyLocationProvider(getContext()),
-                map
-        );
+        try{
+            // Declaramos un overlay con nuestra posicion
+            miPosicionOverlay = new MyLocationNewOverlay(
+                    getContext(),
+                    new GpsMyLocationProvider(getContext()),
+                    map
+            );
 
-        map.getOverlays().add(miPosicionOverlay);   // Situamos el marcador de nuestra posicion en el mapa
+            map.getOverlays().add(miPosicionOverlay);   // Situamos el marcador de nuestra posicion en el mapa
 
-        miPosicionOverlay.enableMyLocation();   // Activamos la localizacion
+            miPosicionOverlay.enableMyLocation();   // Activamos la localizacion
 
-        // Cuando se abra el mapa que nos lleve a nuestra localizacion
-        miPosicionOverlay.runOnFirstFix(new Runnable() {
-            public void run() {
-                mapController.animateTo( miPosicionOverlay.getMyLocation());
-            }
-        });
+            // Cuando se abra el mapa que nos lleve a nuestra localizacion
+            miPosicionOverlay.runOnFirstFix(new Runnable() {
+                public void run() {
+                    mapController.animateTo(miPosicionOverlay.getMyLocation());
+                }
+            });
 
-        // Rutas y nodos firebase
+            // Rutas y nodos firebase
 
-         // Creamos un cluster (es decir, la acumulación de mensajes en un mismo marcador)
-        marcadoresMensajes = new RadiusMarkerClusterer(getContext());
-        map.getOverlays().add(marcadoresMensajes);
+            // Creamos un cluster (es decir, la acumulación de mensajes en un mismo marcador)
+            marcadoresMensajes = new RadiusMarkerClusterer(getContext());
+            map.getOverlays().add(marcadoresMensajes);
 
-        // Le damos la imagen drawable que queremos que tenga
-        Drawable clusterIconD = getResources().getDrawable(R.drawable.cluster);
-        Bitmap clusterIcon = ((BitmapDrawable)clusterIconD).getBitmap();
+            // Le damos la imagen drawable que queremos que tenga
+            Drawable clusterIconD = getResources().getDrawable(R.drawable.cluster);
+            Bitmap clusterIcon = ((BitmapDrawable)clusterIconD).getBitmap();
 
-        // Y le definimos nuestra imagen y ajustamos el tamaño
-        marcadoresMensajes.setIcon(clusterIcon);
-        marcadoresMensajes.setRadius(100);
+            // Y le definimos nuestra imagen y ajustamos el tamaño
+            marcadoresMensajes.setIcon(clusterIcon);
+            marcadoresMensajes.setRadius(100);
+        }
+        catch (IllegalStateException e){}
 
         config.getReferenciaListaUsuarios().addValueEventListener(new ValueEventListener() {
             @Override
@@ -180,32 +227,37 @@ public class OSMap extends Fragment {
 
                                         // Evitamos los repetidos y añadimos grupos en comun
                                         if((grupos.get(iterador).contains(grupoContacto.get(iterador2)) || grupoContacto.get(iterador2).contains(grupos.get(iterador))) && !gruposEnComun.trim().contains(grupos.get(iterador).trim())){
-                                            gruposEnComun = gruposEnComun + "\n | " + grupos.get(iterador);
+                                            gruposEnComun = gruposEnComun + "," + grupos.get(iterador);
                                         }
                                     }
                                 }
 
-                                // Marcamos todos los usuarios en común
-                                if(!gruposEnComun.equals("") && gruposEnComun != null){
+                                try{
+                                    // Marcamos todos los usuarios en común
+                                    if(!gruposEnComun.equals("") && gruposEnComun != null){
 
-                                    // Le damos la imagen drawable que queremos que tenga
-                                    Drawable markerIconD = getResources().getDrawable(R.drawable.marcador_100x100);
+                                        // Le damos la imagen drawable que queremos que tenga
+                                        Drawable markerIconD = getResources().getDrawable(R.drawable.marcador_50x50);
 
-                                    // Definimos el marcador y hacemos que nos marque la localización del mensaje
-                                    Marker marker = new Marker(map);
-                                    GeoPoint point = new GeoPoint(usuario.getLatitud(), usuario.getLongitud());
-                                    marker.setIcon(markerIconD);
-                                    marker.setPosition(point);
+                                        // Definimos el marcador y hacemos que nos marque la localización del mensaje
+                                        Marker marker = new Marker(map);
+                                        GeoPoint point = new GeoPoint(usuario.getLatitud(), usuario.getLongitud());
+                                        marker.setIcon(markerIconD);
+                                        marker.setPosition(point);
 
-                                    // Ajustamos el tamaño, la transparencia
-                                    marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                                        // Ajustamos el tamaño, la transparencia
+                                        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
 
-                                    // Le ponemos el título y la descripción
-                                    marker.setTitle(usuario.getNombre() + " - " + usuario.getEdad());
-                                    marker.setSubDescription("- Descripcion:" + usuario.getDescripcion() + "\n Grupos en común:" + gruposEnComun);
+                                        // Le ponemos el título y la descripción
+                                        marker.setInfoWindow(userMarkerInfo);
+                                        marker.setTitle(usuario.getNombre() + " (" + usuario.getEdad() + ")");
+                                        marker.setSnippet(usuario.getDescripcion());
+                                        marker.setSubDescription(gruposEnComun.replaceFirst(",", "· "));
 
-                                    marcadoresMensajes.add(marker);
+                                        marcadoresMensajes.add(marker);
+                                    }
                                 }
+                                catch (IllegalStateException e){}
                             }
 
                             @Override
@@ -228,43 +280,77 @@ public class OSMap extends Fragment {
 
     private void ajustarMapa() {
 
-        // Ajustamos los valores
-        map.setTileSource(TileSourceFactory.MAPQUESTOSM);
-        map.setTilesScaledToDpi(true);
+        try{
+            // Ajustamos los valores
+            map.setTileSource(TileSourceFactory.MAPQUESTOSM);
+            map.setTilesScaledToDpi(true);
 
-        // Activamos el "pinzado" y el multitocuh
-        map.setBuiltInZoomControls(true);
-        map.setMultiTouchControls(true);
+            // Activamos el "pinzado" y el multitocuh
+            map.setBuiltInZoomControls(true);
+            map.setMultiTouchControls(true);
 
-        // Declaramos una escala del mapa
-        escalaOverlay = new ScaleBarOverlay(map);
+            // Declaramos una escala del mapa
+            escalaOverlay = new ScaleBarOverlay(map);
 
-        // Lo situamos en el centro del mapa
-        escalaOverlay.setCentred(true);
+            // Lo situamos en el centro del mapa
+            escalaOverlay.setCentred(true);
 
-        // Hacemos calculos para que tome la dimension de pixeles correcta
-        final DisplayMetrics dm = getResources().getDisplayMetrics();
-        escalaOverlay.setScaleBarOffset(dm.widthPixels / 2, 10);
+            // Hacemos calculos para que tome la dimension de pixeles correcta
+            final DisplayMetrics dm = getResources().getDisplayMetrics();
+            escalaOverlay.setScaleBarOffset(dm.widthPixels / 2, 10);
 
-        // Declaramos la brujula
-        brujulaOverlay = new CompassOverlay(
-                getContext(),
-                new InternalCompassOrientationProvider(getContext()),
-                map
-        );
+            // Declaramos la brujula
+            brujulaOverlay = new CompassOverlay(
+                    getContext(),
+                    new InternalCompassOrientationProvider(getContext()),
+                    map
+            );
 
-        brujulaOverlay.enableCompass();   // Activamos la brujula
+            brujulaOverlay.enableCompass();   // Activamos la brujula
 
-        // Mostramos los elementos en el mapa
-        map.getOverlays().add(this.escalaOverlay);      // Mostramos la barra con la escala
-        map.getOverlays().add(this.brujulaOverlay);     // Mostramos la brujula
+            // Mostramos los elementos en el mapa
+            map.getOverlays().add(this.escalaOverlay);      // Mostramos la barra con la escala
+            map.getOverlays().add(this.brujulaOverlay);     // Mostramos la brujula
 
-        // Le damos el zoom deseado
-        setZoom(12);
+            // Le damos el zoom deseado
+            setZoom(12);
+        }
+        catch (IllegalStateException e){}
     }
 
     private void setZoom(int zoom) {
         mapController = map.getController();
         mapController.setZoom(zoom);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){ //Afegim una opcio "Refresh" al menu del fragment
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.osmap, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.userPosition) {
+            try {
+                // Lleva a la posición del usuario
+                if(map != null && miPosicionOverlay != null && mapController != null){
+                    mapController.animateTo( miPosicionOverlay.getMyLocation());
+                }
+            }
+            catch (NullPointerException ex){
+                Toast.makeText(getContext(), "No se ha encontrado la posición", Toast.LENGTH_LONG).show();
+                return true;
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

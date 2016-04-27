@@ -19,7 +19,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:isScrollContainer="false" >
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -3,116 +3,140 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_login" tools:context="com.casino.uri.firebaseusers.LoginActivity"
-    android:background="#ffffff">
+    tools:context="com.casino.uri.firebaseusers.LoginActivity"
+    android:background="@color/principal">
 
-    <Button
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Entrar"
-        android:id="@+id/login_ButtonLogin"
-        android:layout_marginTop="32dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginStart="35dp"
-        android:layout_below="@+id/login_info"
-        android:layout_alignLeft="@+id/login_info"
-        android:layout_alignStart="@+id/login_info" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/login_TextPassword"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        android:layout_below="@+id/login_TextEmail"
-        android:layout_alignLeft="@+id/login_TextEmail"
-        android:layout_alignStart="@+id/login_TextEmail"
-        android:layout_alignRight="@+id/login_TextEmail"
-        android:layout_alignEnd="@+id/login_TextEmail" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/login_TextEmail"
-        android:hint="Email"
-        android:maxLines="1"
-        android:layout_below="@+id/login_logo"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="26dp"
-        android:layout_alignLeft="@+id/login_logo"
-        android:layout_alignStart="@+id/login_logo" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:id="@+id/login_logo"
-        android:src="@drawable/feather_icon"
-        android:layout_below="@+id/textView8"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:text="Feather Lyrics"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="35dp"
-        android:id="@+id/textView8"
+        android:id="@+id/discografia_scrollViewDiscografia"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
-        android:id="@+id/login_info"
-        android:gravity="center"
-        android:visibility="invisible"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/login_saveAcc"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/principal"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignLeft="@+id/login_TextPassword"
-        android:layout_alignStart="@+id/login_TextPassword" />
+        android:layout_alignParentBottom="true">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Registrarse"
-        android:id="@+id/login_ButtonRegister"
-        android:layout_marginRight="33dp"
-        android:layout_marginEnd="33dp"
-        android:layout_alignTop="@+id/login_ButtonLogin"
-        android:layout_alignRight="@+id/login_info"
-        android:layout_alignEnd="@+id/login_info" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="525dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/principal">
 
-    <Switch
-        android:gravity="start"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:text="Recordar usuario"
-        android:id="@+id/login_saveAcc"
-        android:checked="false"
-        android:textColor="#000000"
-        android:textAlignment="viewStart"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:paddingRight="30dp"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-        android:showText="false"
-        android:layout_marginTop="42dp"
-        android:layout_below="@+id/login_TextPassword"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignLeft="@+id/login_info"
-        android:layout_alignStart="@+id/login_info" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/login_TextPassword"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:layout_below="@+id/login_TextEmail"
+                android:layout_alignLeft="@+id/login_TextEmail"
+                android:layout_alignStart="@+id/login_TextEmail"
+                android:layout_alignRight="@+id/login_TextEmail"
+                android:layout_alignEnd="@+id/login_TextEmail"
+                android:textColor="#ffffff"
+                android:textColorHighlight="#ffffff"
+                android:textColorHint="#ffffff" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/login_TextEmail"
+                android:hint="Email"
+                android:maxLines="1"
+                android:layout_marginTop="49dp"
+                android:textColor="#ffffff"
+                android:textColorHighlight="#ffffff"
+                android:textColorHint="#ffffff"
+                android:layout_below="@+id/login_logo"
+                android:layout_alignLeft="@+id/login_logo"
+                android:layout_alignStart="@+id/login_logo"
+                android:layout_alignRight="@+id/login_logo"
+                android:layout_alignEnd="@+id/login_logo" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:id="@+id/login_logo"
+                android:src="@drawable/feather_icon"
+                android:layout_below="@+id/textView8"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:text="Feather Lyrics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="40dp"
+                android:id="@+id/textView8"
+                android:textColor="#ffffff"
+                android:layout_marginTop="35dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Small Text"
+                android:id="@+id/login_info"
+                android:gravity="center"
+                android:visibility="invisible"
+                android:textColor="#ffffff"
+                android:layout_below="@+id/login_TextPassword"
+                android:layout_alignLeft="@+id/login_TextPassword"
+                android:layout_alignStart="@+id/login_TextPassword"
+                android:layout_marginTop="27dp"
+                android:layout_alignRight="@+id/login_TextPassword"
+                android:layout_alignEnd="@+id/login_TextPassword"
+                android:textSize="14dp" />
+
+            <Switch
+                android:gravity="start"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:text="Recordar usuario"
+                android:id="@+id/login_saveAcc"
+                android:checked="false"
+                android:textColor="#ffffff"
+                android:textAlignment="viewStart"
+                android:textSize="20sp"
+                android:paddingRight="30dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:showText="false"
+                android:layout_below="@+id/login_info"
+                android:layout_marginTop="46dp"
+                android:layout_alignLeft="@+id/login_ButtonLogin"
+                android:layout_alignStart="@+id/login_ButtonLogin"
+                android:layout_alignRight="@+id/login_ButtonRegister"
+                android:layout_alignEnd="@+id/login_ButtonRegister" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Entrar"
+                android:id="@+id/login_ButtonLogin"
+                android:layout_alignParentBottom="true"
+                android:layout_alignLeft="@+id/textView8"
+                android:layout_alignStart="@+id/textView8" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Registrarse"
+                android:id="@+id/login_ButtonRegister"
+                android:layout_alignParentBottom="true"
+                android:layout_alignRight="@+id/textView8"
+                android:layout_alignEnd="@+id/textView8" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
 
 </RelativeLayout>

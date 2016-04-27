@@ -218,46 +218,50 @@ public class Canciones extends Fragment{
 
                     LyricsList resultado = response.body();
 
-                    resultadosLetras = resultado.getMus();
+                    try{
+                        resultadosLetras = resultado.getMus();
 
-                    if (resultadosLetras.size() == 0) {   // Si no hemos conseguido nada mostramos que la letra no está disponible
-                        letraCancion = "Letra no disponible";
-                    } else {
-                        letraCancion = resultadosLetras.get(0).getText();
+                        if (resultadosLetras.size() == 0) {   // Si no hemos conseguido nada mostramos que la letra no está disponible
+                            letraCancion = "Letra no disponible";
+                        } else {
+                            letraCancion = resultadosLetras.get(0).getText();
 
-                        // Ajustamos correctamente el nombre de pista y el del artista
-                        track = resultadosLetras.get(0).getName();
-                        artist = resultado.getArt().getName();
+                            // Ajustamos correctamente el nombre de pista y el del artista
+                            track = resultadosLetras.get(0).getName();
+                            artist = resultado.getArt().getName();
 
-                        TextView textCancion = (TextView) getView().findViewById(R.id.canciones_letraCancion);
-                        TextView tituloCancion = (TextView) getView().findViewById(R.id.canciones_instrucciones);
-                        ProgressBar progress = (ProgressBar) getView().findViewById(R.id.progressAnimation);   // Animacion de cargando
+                            TextView textCancion = (TextView) getView().findViewById(R.id.canciones_letraCancion);
+                            TextView tituloCancion = (TextView) getView().findViewById(R.id.canciones_instrucciones);
+                            ProgressBar progress = (ProgressBar) getView().findViewById(R.id.progressAnimation);   // Animacion de cargando
 
-                        progress.setVisibility(View.GONE);  // Una vez descargado todo ocultamos la animación
-                        tituloCancion.setText(track + "\n" + artist);   // Asignamos el titulo de la canción y el grupo a su textView
-                        textCancion.setText(letraCancion);  // Asigamos la letra de la canción a su textView
+                            progress.setVisibility(View.GONE);  // Una vez descargado todo ocultamos la animación
+                            tituloCancion.setText(track + "\n" + artist);   // Asignamos el titulo de la canción y el grupo a su textView
+                            textCancion.setText(letraCancion);  // Asigamos la letra de la canción a su textView
 
-                        ScrollView scrollLetra = (ScrollView) getView().findViewById(R.id.canciones_scrollView);
-                        scrollLetra.fullScroll(ScrollView.FOCUS_UP);    // Cada vez que pone el texto de una canción, mueve el scrollView al principio
+                            ScrollView scrollLetra = (ScrollView) getView().findViewById(R.id.canciones_scrollView);
+                            scrollLetra.fullScroll(ScrollView.FOCUS_UP);    // Cada vez que pone el texto de una canción, mueve el scrollView al principio
 
-                        // Subimos el artista a Firebase para guardar un registro
-                        config = (FirebaseConfig) getActivity().getApplication();
-                        Artista artista = new Artista();
+                            // Subimos el artista a Firebase para guardar un registro
+                            config = (FirebaseConfig) getActivity().getApplication();
+                            Artista artista = new Artista();
 
-                        // Cogemos el artista que nos interese
-                        if(cancionMostrada.equals("reproduccion") && !playingArtist.equals("no artist")){
-                            artista.setArtistas(playingArtist);
+                            // Cogemos el artista que nos interese
+                            if(cancionMostrada.equals("reproduccion") && !playingArtist.equals("no artist")){
+                                artista.setArtistas(playingArtist);
+                            }
+                            else if (cancionMostrada.equals("busqueda") && !searchedArtist.equals("no artist")){
+                                artista.setArtistas(searchedArtist);
+                            }
+
+                            // If para prevenir subidas erroneas de artista
+                            if(!artista.getArtistas().equals("no artist")){
+                                subirArtista(artista);
+                            }
                         }
-                        else if (cancionMostrada.equals("busqueda") && !searchedArtist.equals("no artist")){
-                            artista.setArtistas(searchedArtist);
-                        }
-
-                        // If para prevenir subidas erroneas de artista
-                        if(!artista.getArtistas().equals("no artist")){
-                            subirArtista(artista);
-                        }
-
                     }
+                    catch (NullPointerException ex){}
+
+
                 } else {
                     Toast.makeText(getContext(), "Canción no disponible", Toast.LENGTH_SHORT).show(); // Mostramos un toast
                 }

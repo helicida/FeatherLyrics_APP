@@ -18,6 +18,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+
         <activity
             android:name=".SplashScreenActivity"
             android:label="@string/app_name"
@@ -29,10 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -40,6 +43,21 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tk.sbarjola.pa.featherlyricsapp.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".Identificacion.LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".Identificacion.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:parentActivityName=".Identificacion.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tk.sbarjola.pa.featherlyricsapp.Identificacion.LoginActivity" />
         </activity>
 
         <receiver
@@ -64,6 +82,7 @@
                 <action android:name="com.spotify.music.metadatachanged" />
             </intent-filter>
         </receiver>
+
         <receiver android:name=".Widget.Widget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -79,16 +98,6 @@
             android:authorities="tk.sbarjola.pa.featherlyricsapp.provider"
             android:exported="false" />
 
-        <activity android:name=".Identificacion.LoginActivity" />
-        <activity
-            android:name=".Identificacion.RegisterActivity"
-            android:label="@string/title_activity_register"
-            android:parentActivityName=".Identificacion.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="tk.sbarjola.pa.featherlyricsapp.Identificacion.LoginActivity" />
-        </activity>
     </application>
 
 </manifest>

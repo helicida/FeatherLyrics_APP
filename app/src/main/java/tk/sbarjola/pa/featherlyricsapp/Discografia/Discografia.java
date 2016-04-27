@@ -274,32 +274,35 @@ public class Discografia extends Fragment {
 
                     if(resultado.getArtists().getItems().size() != 0){
 
-                        artistSpotify = resultado.getArtists().getItems().get(0).getName(); // Extraemos el nombre del artista del cual descargamos la imagen
+                        try{
+                            artistSpotify = resultado.getArtists().getItems().get(0).getName(); // Extraemos el nombre del artista del cual descargamos la imagen
 
-                        // Imagen y textView relacionados con el artista
-                        ImageView imagenArtista = (ImageView) getView().findViewById(R.id.discografia_artistImage);
+                            // Imagen y textView relacionados con el artista
+                            ImageView imagenArtista = (ImageView) getView().findViewById(R.id.discografia_artistImage);
 
-                        if(resultado.getArtists().getItems().get(0).getPopularity() != null){
-                            datosArtista = "Popularidad: " + resultado.getArtists().getItems().get(0).getPopularity() + "%";
+                            if(resultado.getArtists().getItems().get(0).getPopularity() != null){
+                                datosArtista = "Popularidad: " + resultado.getArtists().getItems().get(0).getPopularity() + "%";
+                            }
+
+                            if(resultado.getArtists().getItems().get(0).getGenres().size() != 0){
+                                datosArtista = datosArtista + "                 Género: " + resultado.getArtists().getItems().get(0).getGenres().get(0).toString();
+                            }
+
+                            //Comprobamos si el artista tiene imagen
+
+                            if(resultado.getArtists().getItems().get(0).getImages().size() != 0){
+
+                                // Extraemos la URL de nuestra imagen parsendo el JSON
+                                String URLimagen = resultado.getArtists().getItems().get(0).getImages().get(0).toString();
+                                URLimagen = URLimagen.split(",")[1].split(",")[0].replace("url=", "").trim();
+
+                                Picasso.with(getContext()).load(URLimagen).fit().centerCrop().into(imagenArtista);
+
+                                ScrollView scrollLetra = (ScrollView) getView().findViewById(R.id.discografia_scrollViewDiscografia);
+                                scrollLetra.fullScroll(ScrollView.FOCUS_UP);
+                            }
                         }
-
-                        if(resultado.getArtists().getItems().get(0).getGenres().size() != 0){
-                            datosArtista = datosArtista + "                 Género: " + resultado.getArtists().getItems().get(0).getGenres().get(0).toString();
-                        }
-
-                        //Comprobamos si el artista tiene imagen
-
-                        if(resultado.getArtists().getItems().get(0).getImages().size() != 0){
-
-                            // Extraemos la URL de nuestra imagen parsendo el JSON
-                            String URLimagen = resultado.getArtists().getItems().get(0).getImages().get(0).toString();
-                            URLimagen = URLimagen.split(",")[1].split(",")[0].replace("url=", "").trim();
-
-                            Picasso.with(getContext()).load(URLimagen).fit().centerCrop().into(imagenArtista);
-
-                            ScrollView scrollLetra = (ScrollView) getView().findViewById(R.id.discografia_scrollViewDiscografia);
-                            scrollLetra.fullScroll(ScrollView.FOCUS_UP);
-                        }
+                        catch (NullPointerException ex){}
                     }
 
                     TextView infoArtista = (TextView) getView().findViewById(R.id.discografia_artistInfo);
