@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.casino.uri.firebaseusers.LoginActivity"
+    tools:context="tk.sbarjola.pa.featherlyricsapp.Identificacion.LoginActivity"
     android:background="@color/principal">
 
     <ScrollView
@@ -27,45 +27,41 @@
             android:layout_marginRight="10dp"
             android:background="@color/principal">
 
-            <EditText
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/passwordWrapper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/login_TextPassword"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:layout_below="@+id/login_TextEmail"
-                android:layout_alignLeft="@+id/login_TextEmail"
-                android:layout_alignStart="@+id/login_TextEmail"
-                android:layout_alignRight="@+id/login_TextEmail"
-                android:layout_alignEnd="@+id/login_TextEmail"
-                android:textColor="#ffffff"
-                android:textColorHighlight="#ffffff"
-                android:textColorHint="#ffffff" />
+                android:textColorHint="#ffffff"
+                android:layout_below="@+id/usernameWrapper"
+                android:layout_alignLeft="@+id/usernameWrapper"
+                android:layout_alignStart="@+id/usernameWrapper"
+                android:layout_alignRight="@+id/usernameWrapper"
+                android:layout_alignEnd="@+id/usernameWrapper">
 
-            <EditText
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/usernameWrapper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/login_TextEmail"
-                android:hint="Email"
-                android:maxLines="1"
-                android:layout_marginTop="49dp"
-                android:textColor="#ffffff"
-                android:textColorHighlight="#ffffff"
                 android:textColorHint="#ffffff"
                 android:layout_below="@+id/login_logo"
                 android:layout_alignLeft="@+id/login_logo"
                 android:layout_alignStart="@+id/login_logo"
                 android:layout_alignRight="@+id/login_logo"
-                android:layout_alignEnd="@+id/login_logo" />
+                android:layout_alignEnd="@+id/login_logo"
+                android:layout_marginTop="49dp">
+
+            </android.support.design.widget.TextInputLayout>
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="180dp"
                 android:id="@+id/login_logo"
-                android:src="@drawable/feather_icon"
-                android:layout_below="@+id/textView8"
-                android:layout_centerHorizontal="true" />
+                android:src="@drawable/drawer_icon"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/textView8"
+                android:layout_toStartOf="@+id/textView8" />
 
             <TextView
                 android:text="Feather Lyrics"
@@ -74,26 +70,10 @@
                 android:textSize="40dp"
                 android:id="@+id/textView8"
                 android:textColor="#ffffff"
-                android:layout_marginTop="35dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/login_info"
-                android:gravity="center"
-                android:visibility="invisible"
-                android:textColor="#ffffff"
-                android:layout_below="@+id/login_TextPassword"
-                android:layout_alignLeft="@+id/login_TextPassword"
-                android:layout_alignStart="@+id/login_TextPassword"
-                android:layout_marginTop="27dp"
-                android:layout_alignRight="@+id/login_TextPassword"
-                android:layout_alignEnd="@+id/login_TextPassword"
-                android:textSize="14dp" />
+                android:layout_alignBottom="@+id/login_logo"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="44dp" />
 
             <Switch
                 android:gravity="start"
@@ -109,12 +89,12 @@
                 android:paddingTop="0dp"
                 android:paddingBottom="0dp"
                 android:showText="false"
+                android:layout_marginTop="43dp"
                 android:layout_below="@+id/login_info"
-                android:layout_marginTop="46dp"
-                android:layout_alignLeft="@+id/login_ButtonLogin"
-                android:layout_alignStart="@+id/login_ButtonLogin"
                 android:layout_alignRight="@+id/login_ButtonRegister"
-                android:layout_alignEnd="@+id/login_ButtonRegister" />
+                android:layout_alignEnd="@+id/login_ButtonRegister"
+                android:layout_alignLeft="@+id/login_ButtonLogin"
+                android:layout_alignStart="@+id/login_ButtonLogin" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -122,8 +102,10 @@
                 android:text="Entrar"
                 android:id="@+id/login_ButtonLogin"
                 android:layout_alignParentBottom="true"
-                android:layout_alignLeft="@+id/textView8"
-                android:layout_alignStart="@+id/textView8" />
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="62dp"
+                android:layout_marginStart="62dp" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -131,8 +113,51 @@
                 android:text="Registrarse"
                 android:id="@+id/login_ButtonRegister"
                 android:layout_alignParentBottom="true"
-                android:layout_alignRight="@+id/textView8"
-                android:layout_alignEnd="@+id/textView8" />
+                android:layout_toRightOf="@+id/login_ButtonLogin"
+                android:layout_toEndOf="@+id/login_ButtonLogin"
+                android:layout_marginLeft="39dp"
+                android:layout_marginStart="39dp" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/login_TextEmail"
+                android:hint="Email"
+                android:maxLines="1"
+                android:textColor="#ffffff"
+                android:textColorHighlight="#ffffff"
+                android:textColorHint="#ffffff"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/passwordWrapper" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/login_TextPassword"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textColor="#ffffff"
+                android:textColorHighlight="#ffffff"
+                android:textColorHint="#ffffff"
+                android:layout_below="@+id/login_TextEmail"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/login_info"
+                android:layout_marginTop="35dp"
+                android:layout_below="@+id/login_TextPassword"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="center_horizontal"
+                android:textColor="#ffffff" />
 
         </RelativeLayout>
 

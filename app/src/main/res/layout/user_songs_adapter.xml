@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="4dp"
+    android:layout_marginTop="2dp"
+    android:paddingRight="2dp"
+    android:paddingBottom="2dp"
+    android:focusable="false"
+    android:descendantFocusability="blocksDescendants">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        card_view:cardBackgroundColor="@android:color/white"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:descendantFocusability="blocksDescendants">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Titulo"
+                android:id="@+id/album_adapter_tituloAlbum"
+                android:textAlignment="gravity"
+                android:maxLines="2"
+                android:minLines="1"
+                android:paddingBottom="2dp"
+                android:paddingLeft="3dp"
+                android:textSize="15dp"
+                android:gravity="top|left"
+                android:textColor="#2e373f"
+                android:textIsSelectable="false"
+                android:layout_marginLeft="134dp"
+                android:layout_marginStart="134dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Band"
+                android:paddingLeft="3dp"
+                android:id="@+id/user_songs_band"
+                android:textSize="12dp"
+                android:layout_below="@+id/album_adapter_tituloAlbum"
+                android:layout_alignLeft="@+id/album_adapter_tituloAlbum"
+                android:layout_alignStart="@+id/album_adapter_tituloAlbum" />
+
+            <ImageView
+                android:layout_width="105dp"
+                android:layout_height="105dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:id="@+id/album_adapter_image"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:adjustViewBounds="true"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

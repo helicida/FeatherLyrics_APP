@@ -5,5 +5,5 @@
         android:id="@+id/action_discografia"
         app:showAsAction="ifRoom"
         android:title="Discography"
-        android:icon="@drawable/ic_album"></item>
+        android:icon="@drawable/ic_album_white_36dp"></item>
 </menu>

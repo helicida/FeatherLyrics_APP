@@ -1,24 +1,25 @@
 package tk.sbarjola.pa.featherlyricsapp.Identificacion;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
@@ -29,7 +30,6 @@ import java.io.File;
 
 import tk.sbarjola.pa.featherlyricsapp.Firebase.FirebaseConfig;
 import tk.sbarjola.pa.featherlyricsapp.Firebase.Usuario;
-import tk.sbarjola.pa.featherlyricsapp.Mapa.OSMap;
 import tk.sbarjola.pa.featherlyricsapp.R;
 
 public class RegisterActivity extends AppCompatActivity implements LocationListener {
@@ -64,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity implements LocationListe
         super.onStart();
 
         // Cuando inicia el fragmento comprobamos si se ha sacado una foto en caso positivo, la acoplamos a nuestra imagen
-        if (imagen){
+        if (imagen) {
             File imagePath = new File(getRutaImagen());
             Picasso.with(this).load(imagePath).centerCrop().resize(240, 300).into(imagenUsuario);
         }
@@ -103,6 +103,16 @@ public class RegisterActivity extends AppCompatActivity implements LocationListe
 
         // Localizacion
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, this);
 
         // Le damos un listener, que abrirá la camara al darl encima
@@ -127,8 +137,9 @@ public class RegisterActivity extends AppCompatActivity implements LocationListe
                 mainReference.createUser(email, password, new Firebase.ResultHandler() {
                     @Override
                     public void onSuccess() {
-                         info.setVisibility(View.VISIBLE);
-                         info.setText("Se ha creado el nuevo usuario correctamente");
+
+                        info.setVisibility(View.VISIBLE);
+                        Toast.makeText(getBaseContext(), "Se ha creado el nuevo usuario correctamente", Toast.LENGTH_SHORT).show(); // Y lanzamos la toast
 
                         // Comenzamos la identificación de nuestro usuario con el correo y password
                         mainReference.authWithPassword(email, password, new Firebase.AuthResultHandler() {
@@ -164,6 +175,7 @@ public class RegisterActivity extends AppCompatActivity implements LocationListe
                             }
                         });
 
+                        finish();   // Volvemos al login
                     }
                     @Override
                     public void onError(FirebaseError firebaseError) {

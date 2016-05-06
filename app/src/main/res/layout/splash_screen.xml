@@ -7,14 +7,13 @@
 
     <ImageView
         android:layout_width="320dp"
-        android:layout_height="210dp"
+        android:layout_height="400dp"
         android:contentDescription="@string/app_name"
         android:scaleType="fitXY"
-        android:src="@drawable/feather_icon"
+        android:src="@drawable/background_icon"
         android:id="@+id/splashscreen_splashIcon"
-        android:layout_marginTop="107dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:text="Feather Lyrics"

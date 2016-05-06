@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +19,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.clustering.RadiusMarkerClusterer;
 import org.osmdroid.bonuspack.overlays.Marker;
@@ -34,9 +34,10 @@ import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import java.util.ArrayList;
 import java.util.HashSet;
-import tk.sbarjola.pa.featherlyricsapp.Firebase.Artista;
+import tk.sbarjola.pa.featherlyricsapp.Firebase.FirebaseItem;
 import tk.sbarjola.pa.featherlyricsapp.Firebase.FirebaseConfig;
 import tk.sbarjola.pa.featherlyricsapp.Firebase.Usuario;
+import tk.sbarjola.pa.featherlyricsapp.MainActivity;
 import tk.sbarjola.pa.featherlyricsapp.R;
 
 
@@ -69,7 +70,7 @@ public class OSMap extends Fragment {
 
         @Override
         public void onOpen(Object item) {
-            Marker marker = (Marker) item;
+            final Marker marker = (Marker) item;
             final Usuario markerUsuario = (Usuario) marker.getRelatedObject();
 
             super.onOpen(item);
@@ -82,7 +83,8 @@ public class OSMap extends Fragment {
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    /* Haremos un intent a la activity del perfil de usuario */
+                    ((MainActivity) getActivity()).setOpenedProfile(markerUsuario.getUID());
+                    ((MainActivity) getActivity()).abrirPerfil();
                 }
             });
         }
@@ -110,8 +112,8 @@ public class OSMap extends Fragment {
                 grupos.clear();
 
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    Artista grupo = userSnapshot.getValue(Artista.class);
-                    grupos.add(grupo.getArtistas().toString());
+                    FirebaseItem grupo = userSnapshot.getValue(FirebaseItem.class);
+                    grupos.add(userSnapshot.getKey());
                 }
 
                 //Al utilizar un HashSet se eliminan todos los duplicados y luego lo convertimos de nuevo a arrayList
@@ -119,8 +121,7 @@ public class OSMap extends Fragment {
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-            }
+            public void onCancelled(FirebaseError firebaseError) {}
         });
     }
 
@@ -131,6 +132,8 @@ public class OSMap extends Fragment {
 
         // Declaramos el mapa
         map = (MapView) view.findViewById(R.id.map);
+        map.setTilesScaledToDpi(true);
+        map.setTileSource(TileSourceFactory.MAPNIK);
 
         try{
             // Ajustamos el mapa con los controles, los elementos a mostrar y el zoom deseado
@@ -174,10 +177,11 @@ public class OSMap extends Fragment {
 
             // Creamos un cluster (es decir, la acumulación de mensajes en un mismo marcador)
             marcadoresMensajes = new RadiusMarkerClusterer(getContext());
+            marcadoresMensajes.getTextPaint().setTextSize(60);
             map.getOverlays().add(marcadoresMensajes);
 
             // Le damos la imagen drawable que queremos que tenga
-            Drawable clusterIconD = getResources().getDrawable(R.drawable.cluster);
+            Drawable clusterIconD = getResources().getDrawable(R.drawable.marcador_100x100);
             Bitmap clusterIcon = ((BitmapDrawable)clusterIconD).getBitmap();
 
             // Y le definimos nuestra imagen y ajustamos el tamaño
@@ -202,7 +206,7 @@ public class OSMap extends Fragment {
                     gruposEnComun = "";
 
                     // Para evitar mostrar al propio usuario
-                    if(!referenciaMusicaContacto.toString().equals(config.getReferenciaUsuarioLogeado().toString() + "/Artistas")){
+                    if(!referenciaMusicaContacto.toString().equals(config.getReferenciaUsuarioLogeado().toString() + "/Artistas") && (usuario.getLatitud() != -1 && usuario.getLongitud() != -1)){
 
                         // Descargamos la lista de usuarios
                         referenciaMusicaContacto.addValueEventListener(new ValueEventListener() {
@@ -214,8 +218,8 @@ public class OSMap extends Fragment {
                                 grupoContacto.clear();
 
                                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                                    Artista grupo = userSnapshot.getValue(Artista.class);
-                                    grupoContacto.add(grupo.getArtistas().toString());
+                                    FirebaseItem grupo = userSnapshot.getValue(FirebaseItem.class);
+                                    grupoContacto.add(userSnapshot.getKey());
                                 }
 
                                 //Al utilizar un HashSet se eliminan todos los duplicados y luego lo convertimos de nuevo a arrayList
@@ -227,7 +231,7 @@ public class OSMap extends Fragment {
 
                                         // Evitamos los repetidos y añadimos grupos en comun
                                         if((grupos.get(iterador).contains(grupoContacto.get(iterador2)) || grupoContacto.get(iterador2).contains(grupos.get(iterador))) && !gruposEnComun.trim().contains(grupos.get(iterador).trim())){
-                                            gruposEnComun = gruposEnComun + "," + grupos.get(iterador);
+                                            gruposEnComun = gruposEnComun + ", " + grupos.get(iterador);
                                         }
                                     }
                                 }
@@ -237,7 +241,7 @@ public class OSMap extends Fragment {
                                     if(!gruposEnComun.equals("") && gruposEnComun != null){
 
                                         // Le damos la imagen drawable que queremos que tenga
-                                        Drawable markerIconD = getResources().getDrawable(R.drawable.marcador_50x50);
+                                        Drawable markerIconD = getResources().getDrawable(R.drawable.ic_person_pin_circle_deep_purple_a400_48dp);
 
                                         // Definimos el marcador y hacemos que nos marque la localización del mensaje
                                         Marker marker = new Marker(map);
@@ -253,6 +257,7 @@ public class OSMap extends Fragment {
                                         marker.setTitle(usuario.getNombre() + " (" + usuario.getEdad() + ")");
                                         marker.setSnippet(usuario.getDescripcion());
                                         marker.setSubDescription(gruposEnComun.replaceFirst(",", "· "));
+                                        marker.setRelatedObject(usuario);
 
                                         marcadoresMensajes.add(marker);
                                     }
@@ -261,9 +266,7 @@ public class OSMap extends Fragment {
                             }
 
                             @Override
-                            public void onCancelled(FirebaseError firebaseError) {
-
-                            }
+                            public void onCancelled(FirebaseError firebaseError) {}
                         });
                     }
                 }

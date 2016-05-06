@@ -13,7 +13,7 @@
         android:layout_width="500dp"
         android:layout_height="500dp"
         android:id="@+id/home_featherIcon"
-        android:src="@drawable/feather_icon"
+        android:src="@drawable/background_icon"
         android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true"
         android:alpha = "0.2"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Bienvenido a Feather Lyrics"
+        android:text="Reproducciones locales"
         android:id="@+id/home_textoBienvenida"
         android:gravity="center"
         android:layout_alignParentTop="true"
@@ -35,7 +35,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Empieza a navegar deslizando el panel de la izquierda"
+        android:text="Lista de reproducciones Android"
         android:id="@+id/home_instrucciones"
         android:gravity="center"
         android:layout_below="@+id/home_textoBienvenida"
@@ -44,29 +44,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Últimas reproducciones"
-        android:id="@+id/textView5"
-        android:gravity="left"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="5dp"
-        android:layout_below="@+id/home_instrucciones"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="19dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textSize="18dp" />
-
     <ListView
-        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/home_listCanciones"
-        android:layout_below="@+id/textView5"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/home_instrucciones"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

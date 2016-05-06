@@ -31,9 +31,7 @@ public class SettingsActivityFragment extends PreferenceFragment {
 
     SharedPreferences.Editor sharedPreferencesEditor;   // SharedPreferenceEditor que usaremos para modificar las settings
 
-    public SettingsActivityFragment() {
-
-    }
+    public SettingsActivityFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

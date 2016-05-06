@@ -16,9 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.firebase.client.Firebase;
-
 import java.util.List;
 import at.markushi.ui.CircleButton;
 import retrofit.Call;
@@ -28,7 +26,12 @@ import retrofit.Response;
 import retrofit.Retrofit;
 import retrofit.http.GET;
 import retrofit.http.Query;
-import tk.sbarjola.pa.featherlyricsapp.Firebase.Artista;
+
+import retrofit.http.Url;
+import tk.sbarjola.pa.featherlyricsapp.APIs.Spotify.ArtistSpotify;
+import tk.sbarjola.pa.featherlyricsapp.APIs.Vagalume.Canciones.LyricsList;
+import tk.sbarjola.pa.featherlyricsapp.APIs.Vagalume.Canciones.Mu;
+import tk.sbarjola.pa.featherlyricsapp.Firebase.FirebaseItem;
 import tk.sbarjola.pa.featherlyricsapp.Firebase.FirebaseConfig;
 import tk.sbarjola.pa.featherlyricsapp.MainActivity;
 import tk.sbarjola.pa.featherlyricsapp.R;
@@ -38,17 +41,26 @@ public class Canciones extends Fragment{
     // Datos de la API
     private String BaseURL = "http://api.vagalume.com.br/";         //Principio de la URL que usará retrofit
     private String apiKey = "754f223018be007a45003e3b87877bac";     // Key de Vagalume. Máximo 100.000 peticiones /dia
+    private String URLSpotify = "";                                 // Spotify
     private List<Mu> resultadosLetras = null;                       // List con el resultado de las letras obtenidas
 
+    // Objetos que subiremos a firebase
+    FirebaseItem cancion = new FirebaseItem();
+    String cancionKey = "adsad";
+    FirebaseItem firebaseItem = new FirebaseItem();
+    String artistaKey = "adsad";
+
     // Variables del fragment
-    String playingArtist = "no artist";         // Nombre del artista de la canción en reproducción
+    String playingArtist = "no artist";         // Nombre del firebaseItem de la canción en reproducción
     String playingTrack = "no track";           // Nombre de la pista en reproducción
-    String searchedArtist = "no artist";        // Nombre del artista seleccionado en discografia
+    String searchedArtist = "no artist";        // Nombre del firebaseItem seleccionado en discografia
     String searchedTrack = "no track";          // Nombre de la pista seleccionada en discografia
 
-    // Artista y pista que vamos a mostrar
+    // FirebaseItem y pista que vamos a mostrar
     String artist = "no artist";
     String track = "no track";
+    String url_cancion = "URL desconocida";
+    String url_artista = "URL desconocida";
     String cancionMostrada = "reproduccion";       // Que canción estamos mostrando en este momento
     String letraCancion;                           // String en el que guardaremos la letra de la canción
 
@@ -56,6 +68,8 @@ public class Canciones extends Fragment{
 
     // Variables y Adapters
     private servicioLetrasRetrofit servicioLetras;  // Interfaz para las peliculas populares
+    private servicioImagenArtistaRetrofit servicioImagen;      // Interfaz para descargar la imagen
+
 
     // Declaramos el retrofit como variable global para poder reutilizarlo si es necesario
     private Retrofit retrofit = new Retrofit.Builder()
@@ -103,7 +117,7 @@ public class Canciones extends Fragment{
 
                 // Programamos el botón para que alterne entra la canción en reproducción y la buscada
 
-                if (!playingArtist.equals("no artist") && !searchedArtist.equals("no artist")) {    // Comprueba si hay algún artista en reproducción
+                if (!playingArtist.equals("no artist") && !searchedArtist.equals("no artist")) {    // Comprueba si hay algún firebaseItem en reproducción
 
                     ProgressBar progress = (ProgressBar) getView().findViewById(R.id.progressAnimation);   // Animacion de cargando
 
@@ -123,7 +137,7 @@ public class Canciones extends Fragment{
                     descargarLetras.execute();
                                                  // Y lo ejecutamos
                 } else {
-                    Toast.makeText(getContext(), "No se ha detectado ningun artista", Toast.LENGTH_SHORT).show(); // Mostramos un toast
+                    Toast.makeText(getContext(), "No se ha detectado ningun firebaseItem", Toast.LENGTH_SHORT).show(); // Mostramos un toast
                 }
             }
         });
@@ -160,6 +174,7 @@ public class Canciones extends Fragment{
 
         MenuItem item = menu.findItem(R.id.action_search);
         SearchView sv = new SearchView(((MainActivity) getActivity()).getSupportActionBar().getThemedContext());
+        sv.setQueryHint("Example: Wonderwall - Oasis");
         MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
         MenuItemCompat.setActionView(item, sv);
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -195,15 +210,6 @@ public class Canciones extends Fragment{
         });
     }
 
-
-    class DescargarLetras extends AsyncTask {
-        @Override
-        protected Object doInBackground(Object[] params) {
-            descargarLetra();
-            return null;
-        }
-    }
-
     public void descargarLetra(){
 
         servicioLetras = retrofit.create(servicioLetrasRetrofit.class);
@@ -226,7 +232,7 @@ public class Canciones extends Fragment{
                         } else {
                             letraCancion = resultadosLetras.get(0).getText();
 
-                            // Ajustamos correctamente el nombre de pista y el del artista
+                            // Ajustamos correctamente el nombre de pista y el del firebaseItem
                             track = resultadosLetras.get(0).getName();
                             artist = resultado.getArt().getName();
 
@@ -241,27 +247,26 @@ public class Canciones extends Fragment{
                             ScrollView scrollLetra = (ScrollView) getView().findViewById(R.id.canciones_scrollView);
                             scrollLetra.fullScroll(ScrollView.FOCUS_UP);    // Cada vez que pone el texto de una canción, mueve el scrollView al principio
 
-                            // Subimos el artista a Firebase para guardar un registro
+                            // Subimos el firebaseItem a Firebase para guardar un registro
                             config = (FirebaseConfig) getActivity().getApplication();
-                            Artista artista = new Artista();
 
-                            // Cogemos el artista que nos interese
-                            if(cancionMostrada.equals("reproduccion") && !playingArtist.equals("no artist")){
-                                artista.setArtistas(playingArtist);
-                            }
-                            else if (cancionMostrada.equals("busqueda") && !searchedArtist.equals("no artist")){
-                                artista.setArtistas(searchedArtist);
-                            }
+                            if(cancion != null && artist != null) {
 
-                            // If para prevenir subidas erroneas de artista
-                            if(!artista.getArtistas().equals("no artist")){
-                                subirArtista(artista);
+                                String textArtist = artist.replace(".", "").replace("$", "").replace("#", "").replace("[", "").replace("]", "");
+                                String textCanciones = track.replace(".", "").replace("$", "").replace("#", "").replace("[", "").replace("]", "");
+
+                                cancionKey = textCanciones + "-" + textArtist;
+                                artistaKey = textArtist;
+
+                                URLSpotify = "https://api.spotify.com/v1/search?q=" + textArtist + "&type=artist";
+
+                                // Lo mismo para los datos del firebaseItem
+                                DescargarArtista descargarArt = new DescargarArtista();
+                                descargarArt.execute();
                             }
                         }
                     }
                     catch (NullPointerException ex){}
-
-
                 } else {
                     Toast.makeText(getContext(), "Canción no disponible", Toast.LENGTH_SHORT).show(); // Mostramos un toast
                 }
@@ -275,11 +280,71 @@ public class Canciones extends Fragment{
 
     }
 
-    public void subirArtista(Artista artista) {
-        Firebase refUsuario = config.getReferenciaUsuarioLogeado().child("Artistas");
-        Firebase artistaAsubir = refUsuario.push();
-        artistaAsubir.setValue(artista);
+    public void descargaArtista(){
+
+        servicioImagen = retrofit.create(servicioImagenArtistaRetrofit.class);
+
+        Call<ArtistSpotify> llamadaSpotify = (Call<ArtistSpotify>) servicioImagen.artistsSpotify(URLSpotify);
+
+        llamadaSpotify.enqueue(new Callback<ArtistSpotify>() {
+            @Override
+            public void onResponse(Response<ArtistSpotify> response, Retrofit retrofit) {
+
+                ArtistSpotify resultado = response.body();
+
+                if (response.isSuccess()) {
+
+                    if(resultado.getArtists().getItems().size() != 0){
+
+                        try{
+                            //Comprobamos si el firebaseItem tiene imagen
+                            if(resultado.getArtists().getItems().get(0).getImages().size() != 0){
+
+                                // Extraemos la URL de nuestra imagen parsendo el JSON
+                                String URLimagen = resultado.getArtists().getItems().get(0).getImages().get(0).toString();
+                                URLimagen = URLimagen.split(",")[1].split(",")[0].replace("url=", "").trim();
+                                cancion.setItemUrl(URLimagen);
+                                firebaseItem.setItemUrl(URLimagen);
+                            }
+                        }
+                        catch (NullPointerException ex){}
+                    }
+
+                } else {
+                    url_artista = "URL desconocido";
+                    url_cancion = "URL desconocida";
+                }
+
+                subirArtista(firebaseItem, artistaKey);
+                subirCancion(cancion, cancionKey);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+                url_artista = "URL desconocida";
+
+                subirArtista(firebaseItem, artistaKey);
+                subirCancion(cancion, cancionKey);
+            }
+        });
     }
+
+    // Metodos firebase
+
+    public void subirCancion(FirebaseItem firebaseItem, String key) {
+
+        Firebase refCancionesUsuarioLoggeado = config.getReferenciaUsuarioLogeado().child("Canciones").child(key);
+        refCancionesUsuarioLoggeado.setValue(firebaseItem);
+    }
+
+    public void subirArtista(FirebaseItem firebaseItem, String key) {
+
+        Firebase refArtistasUsuarioLoggeado = config.getReferenciaUsuarioLogeado().child("Artistas").child(key);
+        refArtistasUsuarioLoggeado.setValue(firebaseItem);
+    }
+
+    // Interficies retrofit
 
     public interface servicioLetrasRetrofit{ //Interficie para descargar las letras
         @GET("search.php")
@@ -288,6 +353,29 @@ public class Canciones extends Fragment{
                 @Query("mus") String songName,
                 @Query("apikey") String api
         );
+    }
+
+    public interface servicioImagenArtistaRetrofit{ // Interficie para descargar la imagen del firebaseItem
+        @GET
+        Call<ArtistSpotify> artistsSpotify(@Url String url); // Le pasamos la URL entera ya construida
+    }
+
+    // Async Tasks
+
+    class DescargarLetras extends AsyncTask {
+        @Override
+        protected Object doInBackground(Object[] params) {
+            descargarLetra();
+            return null;
+        }
+    }
+
+    class DescargarArtista extends AsyncTask {
+        @Override
+        protected Object doInBackground(Object[] params) {
+            descargaArtista();
+            return null;
+        }
     }
 
     public void setSong(String artist, String track) {

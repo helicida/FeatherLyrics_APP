@@ -24,21 +24,21 @@
         android:paddingTop="0dp"
         android:paddingBottom="0dp"
         android:showText="false"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_alignEnd="@+id/textView2" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mostar una notificación con el nombre y artista de la canción en reproducción"
+        android:text="Mostar una notificación con el nombre de pista y nombnre del artista de la canción en reproducción"
         android:id="@+id/textView2"
-        android:layout_alignTop="@+id/settings_mostrarToast"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="28dp" />
+        android:layout_alignParentEnd="true" />
 
     <Switch
         android:gravity="start"
@@ -55,12 +55,11 @@
         android:paddingTop="0dp"
         android:paddingBottom="0dp"
         android:showText="false"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/settings_mostrarToast"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="21dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignRight="@+id/settings_mostrarToast"
+        android:layout_alignEnd="@+id/settings_mostrarToast" />
 
     <TextView
         android:layout_width="wrap_content"

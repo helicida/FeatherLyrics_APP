@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="@dimen/nav_header_height"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/drawer_background"
-
-    android:theme="@style/ThemeOverlay.AppCompat.Dark" android:orientation="vertical"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:orientation="vertical"
     android:weightSum="1">
 
-    <ImageView android:layout_width="197dp"
+    <ImageView android:layout_width="100dp"
         android:gravity="top"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:paddingTop="25dp"
         android:src="@drawable/drawer_icon"
         android:id="@+id/imageView"
-        android:layout_weight="0.92" />
+        android:layout_toRightOf="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView android:layout_width="150dp"
         android:gravity="bottom"
@@ -24,7 +28,10 @@
         android:text="Feather Lyrics"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#FFF"
-        android:id="@+id/featherLyrics" />
+        android:id="@+id/featherLyrics"
+        android:layout_above="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:gravity="bottom"
@@ -35,6 +42,10 @@
         android:paddingBottom="5dp"
         android:text="Tú música, nuestra música"
         android:id="@+id/textView"
-        android:textColor="#819fb0" />
+        android:textColor="#819fb0"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="18dp" />
 
-</LinearLayout>
+</RelativeLayout>

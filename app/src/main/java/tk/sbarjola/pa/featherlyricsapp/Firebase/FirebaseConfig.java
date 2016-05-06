@@ -22,6 +22,7 @@ public class FirebaseConfig extends Application {
     private Firebase mainReference;              // Apunta a la raiz de firebase
     private Firebase referenciaListaUsuarios;    // Apunta a la lista de usuarios
     private Firebase referenciaUsuarioLogeado;   // Apunta al usuario loggeado
+    private String userUID;                      // UID del usuario
 
     // Preferencias
     SharedPreferences preferencias;     // Preferencias personalizadas
@@ -43,11 +44,16 @@ public class FirebaseConfig extends Application {
         boolean autologin = preferencias.getBoolean("autologin", true);
 
         String refUsuarioSp = preferencias.getString("refUsuario", null);
+        String UID = preferencias.getString("UID", null);
 
         // Autologin
 
         if (autologin && refUsuarioSp != null) {
             setReferenciaUsuarioLogeado(new Firebase(refUsuarioSp));
+
+            if(UID != null){
+                setUserUID(UID);
+            }
         }
     }
 
@@ -65,6 +71,10 @@ public class FirebaseConfig extends Application {
         return referenciaUsuarioLogeado;
     }
 
+    public String getUserUID() {
+        return userUID;
+    }
+
     // Setters
 
     public void setMainReference(Firebase mainReference) {
@@ -77,5 +87,9 @@ public class FirebaseConfig extends Application {
 
     public void setReferenciaUsuarioLogeado(Firebase referenciaUsuarioLogeado) {
         this.referenciaUsuarioLogeado = referenciaUsuarioLogeado;
+    }
+
+    public void setUserUID(String userUID) {
+        this.userUID = userUID;
     }
 }

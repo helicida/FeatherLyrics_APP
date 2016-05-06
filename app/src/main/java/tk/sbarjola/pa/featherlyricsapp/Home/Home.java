@@ -6,8 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,7 +13,6 @@ import android.widget.ListView;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import tk.sbarjola.pa.featherlyricsapp.MainActivity;
 import tk.sbarjola.pa.featherlyricsapp.R;
@@ -25,12 +22,6 @@ public class Home extends Fragment implements LoaderManager.LoaderCallbacks<Curs
 
     MusicListAdapter myListAdapter;     // Adaptador para el listView
     ListView listView;                  // ListView
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);    //Aixo fa que mostri el menu. Com n'hi han fragments no grafics cal especificar-ho
-    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup contenedor, Bundle savedInstanceState) {
 
@@ -86,13 +77,6 @@ public class Home extends Fragment implements LoaderManager.LoaderCallbacks<Curs
                 "_id DESC"
         );
         myListAdapter.swapCursor(cursor);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){ //Afegim una opcio "Refresh" al menu del fragment
-        super.onCreateOptionsMenu(menu, inflater);
-
-        menu.clear();   // Limpiamos el menú
     }
 
     @Override

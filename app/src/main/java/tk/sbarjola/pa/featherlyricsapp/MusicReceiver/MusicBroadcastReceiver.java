@@ -6,10 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
-import com.firebase.client.Firebase;
-
-import tk.sbarjola.pa.featherlyricsapp.Firebase.FirebaseConfig;
-import tk.sbarjola.pa.featherlyricsapp.Firebase.Artista;
 import tk.sbarjola.pa.featherlyricsapp.MainActivity;
 import tk.sbarjola.pa.featherlyricsapp.provider.music.MusicColumns;
 import tk.sbarjola.pa.featherlyricsapp.provider.music.MusicContentValues;
@@ -23,9 +19,7 @@ public class MusicBroadcastReceiver extends BroadcastReceiver {
     public static String playingTrack = "no track";     // Titulo de la pista en reproduccion
     static MainActivity mainVar = null;                 // Esta será la referencia a la clase del MainActivity
 
-    public MusicBroadcastReceiver() {
-
-    }
+    public MusicBroadcastReceiver() {}
 
     @Override
     public void onReceive(Context context, Intent intent) {

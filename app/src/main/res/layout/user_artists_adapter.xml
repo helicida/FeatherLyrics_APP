@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="4dp"
+    android:layout_marginTop="2dp"
+    android:paddingRight="2dp"
+    android:paddingBottom="2dp"
+    android:focusable="false"
+    android:descendantFocusability="blocksDescendants">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="215dp"
+        android:layout_height="150dp"
+        card_view:cardBackgroundColor="@android:color/white"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:descendantFocusability="blocksDescendants">
+
+            <ImageView
+                android:layout_width="215dp"
+                android:layout_height="190dp"
+                android:id="@+id/album_adapter"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:adjustViewBounds="true"
+                android:layout_above="@+id/user_artists_artistName" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre Artista"
+                android:id="@+id/user_artists_artistName"
+                android:textAlignment="gravity"
+                android:maxLines="2"
+                android:minLines="1"
+                android:paddingTop="5dp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="3dp"
+                android:textSize="15dp"
+                android:textColor="#2e373f"
+                android:textIsSelectable="false"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="center_horizontal" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

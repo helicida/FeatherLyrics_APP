@@ -9,20 +9,23 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
+import tk.sbarjola.pa.featherlyricsapp.APIs.Vagalume.Discografia.Item;
 import tk.sbarjola.pa.featherlyricsapp.Canciones.Canciones;
+import tk.sbarjola.pa.featherlyricsapp.Discografia.Album;
 import tk.sbarjola.pa.featherlyricsapp.Discografia.Discografia;
+import tk.sbarjola.pa.featherlyricsapp.Home.About;
 import tk.sbarjola.pa.featherlyricsapp.Home.Home;
+import tk.sbarjola.pa.featherlyricsapp.PerfilesUsuarios.BaseFragmentUser;
+import tk.sbarjola.pa.featherlyricsapp.PerfilesUsuarios.TabLayoutFragments.UserProfile;
 import tk.sbarjola.pa.featherlyricsapp.Mapa.OSMap;
 import tk.sbarjola.pa.featherlyricsapp.Noticias.Noticias;
 import tk.sbarjola.pa.featherlyricsapp.MusicReceiver.MusicBroadcastReceiver;
@@ -32,13 +35,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;                // Drawer
     private NavigationView navigationView;      // NavigationView
     Fragment fragment = null;                   // fragmento que ocupara el centro de nuestro navigation drawer
-
+    Item searchedAlbum;                         // List que le pasamos al fragment de album
+    String searchedAlbumURL;                    // URL que contiene la imagen de la caratula del album
     String discographyStart = "no artist";      // Nombre del artista que mostraremos en la sección de discografia
     String playingArtist = "no artist";         // Nombre del artista de la canción en reproducción
     String playingTrack = "no track";           // Nombre de la pista en reproducción
     String searchedArtist = "no artist";        // Nombre del artista seleccionado en discografia
     String searchedTrack = "no track";          // Nombre de la pista seleccionada en discografia
+    String openedProfile = "no profile";        // UID del perfil a buscar
 
+    // Para monitorizar la musica en reproducción
+    BroadcastReceiver broadcastReceiver = null;
+
+    // Preferncias
     SharedPreferences preferencias;                    // Preferencias personalizadas
     SharedPreferences.Editor sharedPreferencesEditor;  // SharedPreferenceEditor que usaremos para modificar las settings
 
@@ -59,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        this.getSupportActionBar().setElevation(0);
+        getSupportActionBar().setTitle("Feather Lyrics");
+
         // Ajustamos el drawer de nuestro activity
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -72,7 +84,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Hacemos que autmaticamente arranque en el fragmento "Home"
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new Home(), "home")
+                .addToBackStack(null)
+                .replace(R.id.content_frame, new Noticias(), "home")
                 .commit();
 
         navigationView.getMenu().getItem(0).setChecked(true);   // Marcamos el menu del navigation Drawer
@@ -81,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Con este BroadcastReceiver escucharemos a nuestro Receiver que controla la Musica
 
-        BroadcastReceiver broadcastReceiver = null;
         broadcastReceiver = new MusicBroadcastReceiver();
         MusicBroadcastReceiver.setMainActivityHandler(this);    // Le pasamos este activity para vincularlos
         IntentFilter callInterceptorIntentFilter = new IntentFilter("android.intent.action.ANY_ACTION");
@@ -134,6 +146,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void abrirCanciones() {
 
+        checkBackStackOverhead();
+
         // Función para llamar al fragment de canciones
 
         fragment = new Canciones();
@@ -141,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, fragment, tag)
+                .addToBackStack(null)
                 .commit();
 
         navigationView.getMenu().getItem(1).setChecked(true);   // Marcamos el menu del navigation Drawer
@@ -150,17 +165,98 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void abrirDiscografia() {
 
+        checkBackStackOverhead();
+
         // Función para llamar al fragment de canciones
 
         fragment = new Discografia();
 
         getSupportFragmentManager().beginTransaction()
+                .addToBackStack(null)
                 .replace(R.id.content_frame, fragment)
                 .commit();
 
         navigationView.getMenu().getItem(2).setChecked(true);   // Marcamos el menu del navigation Drawer
 
         getSupportActionBar().setTitle("Discografia");    // Cambiamos el titulo del ActionBar
+    }
+
+    public void abrirPerfil() {
+
+        checkBackStackOverhead();
+
+        // Función para llamar al fragment de canciones
+        fragment = new BaseFragmentUser();
+
+        getSupportFragmentManager().beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.content_frame, fragment)
+                .commit();
+
+        navigationView.getMenu().getItem(0).setChecked(true);   // Marcamos el menu del navigation Drawer
+
+    }
+
+    public void abrirArtistas() {
+
+        checkBackStackOverhead();
+
+        // Función para llamar al fragment de canciones
+        fragment = new Discografia();
+
+        getSupportFragmentManager().beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.content_frame, fragment)
+                .commit();
+
+        navigationView.getMenu().getItem(2).setChecked(true);   // Marcamos el menu del navigation Drawer
+    }
+
+    public void abrirReproduccionesLocales(){
+
+        checkBackStackOverhead();
+
+        // Función para llamar al fragment de canciones
+        fragment = new Home();
+
+        getSupportFragmentManager().beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.content_frame, fragment)
+                .commit();
+
+    }
+
+    public void abrirPersonalProfile() {
+
+        // Que se abra el nuestro
+        openedProfile = "no profile";
+
+        checkBackStackOverhead();
+
+        // Función para llamar al fragment de canciones
+        fragment = new BaseFragmentUser();
+
+        getSupportFragmentManager().beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.content_frame, fragment)
+                .commit();
+
+        navigationView.getMenu().getItem(0).setChecked(true);   // Marcamos el menu del navigation Drawer
+    }
+
+    public void abrirDisco() {
+
+        // Función para llamar al fragment de canciones
+        fragment = new Album();
+
+        checkBackStackOverhead();
+
+        getSupportFragmentManager().beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.content_frame, fragment)
+                .commit();
+
+        navigationView.getMenu().getItem(2).setChecked(true);   // Marcamos el menu del navigation Drawer
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -175,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Asignamos las acciones a cada menuItem del drawer
         if (id == R.id.nav_home) {
-            fragment = new Home();
+            fragment = new BaseFragmentUser();
             transaccion = true;
         }else if (id == R.id.nav_canciones) {
             fragment = new Canciones();
@@ -193,21 +289,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_preferencias) {
             Intent i = new Intent(this, SettingsActivity.class);
             startActivity(i);
-        } else if (id == R.id.nav_bio){
-            showAbout();
+        } else if (id == R.id.nav_bio) {
+            fragment = new About();
+            transaccion = true;
+        } else if(id == R.id.nav_local){
+            fragment = new Home();
+            transaccion = true;
         } else if (id == R.id.nav_salir) {
+
+            unregisterReceiver(broadcastReceiver);
 
             // Borramos la cuenta
             sharedPreferencesEditor = preferencias.edit();
             sharedPreferencesEditor.putBoolean("autologin", false);
             sharedPreferencesEditor.commit();
-
-            finish();   // Volvemos al login
         }
 
         // Si el boleano es true llamamos al nuevo fragment
         if(transaccion){
+
+            checkBackStackOverhead();
+
             getSupportFragmentManager().beginTransaction()
+                    .addToBackStack(null)
                     .replace(R.id.content_frame, fragment, tag)
                     .commit();
 
@@ -219,22 +323,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    protected void showAbout() {
-        // Inflate the about message contents
-        View messageView = getLayoutInflater().inflate(R.layout.about, null, false);
+    public void checkBackStackOverhead(){
 
-        // When linking text, force to always use default color. This works
-        // around a pressed color state bug.
-        TextView textView = (TextView) messageView.findViewById(R.id.about_credits);
-        int defaultColor = textView.getTextColors().getDefaultColor();
-        textView.setTextColor(defaultColor);
+        FragmentManager fm = this.getSupportFragmentManager();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setIcon(R.drawable.feather_icon);
-        builder.setTitle(R.string.app_name);
-        builder.setView(messageView);
-        builder.create();
-        builder.show();
+        int numeroFragments = fm.getBackStackEntryCount();
+
+        // Cuando nos pasemos de 5 fragments cargados en la memoria, nos peta uno
+        if(numeroFragments > 5) {
+            fm.popBackStack();
+        }
     }
 
     @Override
@@ -270,6 +368,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void setDiscographyStart(String discographyStart) { this.discographyStart = discographyStart; }
 
+    public void setOpenedProfile(String openedProfile) {
+        this.openedProfile = openedProfile;
+    }
+
+    public void setSearchedAlbum(Item searchedAlbum) {
+        this.searchedAlbum = searchedAlbum;
+    }
+
+    public void setSearchedAlbumURL(String searchedAlbumURL) {
+        this.searchedAlbumURL = searchedAlbumURL;
+    }
+
     // Getters
 
     public String getDiscographyStart() { return discographyStart; }
@@ -288,5 +398,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public String getSearchedTrack() {
         return searchedTrack;
+    }
+
+    public String getOpenedProfile() {
+        return openedProfile;
+    }
+
+    public Item getSearchedAlbum() {
+        return searchedAlbum;
+    }
+
+    public String getSearchedAlbumURL() {
+        return searchedAlbumURL;
     }
 }

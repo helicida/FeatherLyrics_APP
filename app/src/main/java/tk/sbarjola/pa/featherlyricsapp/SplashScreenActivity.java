@@ -12,9 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -76,14 +74,7 @@ public class SplashScreenActivity extends Activity {
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
-
-                    // Start the next activity
-                    Intent mainIntent = new Intent().setClass(SplashScreenActivity.this, LoginActivity.class);
-                    startActivity(mainIntent);
-
-                    // Close the activity so the user won't able to go back this
-                    // activity pressing Back button
-                    finish();
+                    startMain();
                 }
             };
             // Simulate a long loading process on application startup.
@@ -91,10 +82,14 @@ public class SplashScreenActivity extends Activity {
             timer.schedule(task, SPLASH_SCREEN_DELAY);
         }
         else {
-            // Start the next activity
-            Intent mainIntent = new Intent().setClass(SplashScreenActivity.this, LoginActivity.class);
-            startActivity(mainIntent);
-            finish();
+            startMain();
         }
+    }
+
+    public void startMain(){
+        // Start the next activity
+        Intent mainIntent = new Intent().setClass(SplashScreenActivity.this, LoginActivity.class);
+        startActivity(mainIntent);
+        finish();
     }
 }
