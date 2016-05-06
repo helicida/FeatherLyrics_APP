@@ -1,4 +1,4 @@
-# Feather Lyrics - Experimental Fork
+# Feather Lyrics - Stable Version
 
 This repository contains the source code for the Feather Lyrics (Android APP).
 
@@ -77,9 +77,3 @@ Feather Lyrics tracks the next players:
 <img src="http://i.imgur.com/2GfK3RI.png" width="250">
 <img src="http://i.imgur.com/fkU3dhN.png" width="250">
 <img src="http://i.imgur.com/5qANarU.jpg" width="250">
-
-## Experimental version
-
-This repository is a fork of the main (and stable) one. All the new features and coding is tested here, it's possible that it contain errors and critical bugs. If you are looking for a stable version you should go to 
-https://github.com/helicida/FeatherLyrics_APP
-
