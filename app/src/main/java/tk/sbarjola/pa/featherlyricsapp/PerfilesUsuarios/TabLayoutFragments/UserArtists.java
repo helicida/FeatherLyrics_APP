@@ -18,7 +18,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-
 import tk.sbarjola.pa.featherlyricsapp.Firebase.FirebaseItem;
 import tk.sbarjola.pa.featherlyricsapp.Firebase.FirebaseConfig;
 import tk.sbarjola.pa.featherlyricsapp.Firebase.Usuario;
@@ -33,7 +32,9 @@ public class UserArtists extends Fragment {
 
     // Firebase
     FirebaseConfig config;                                      // Configuración de firebase
+    private Firebase referenciaUsuario;                         // Apunta al usuario loggeado
     private Firebase referenciaListaUsuarios;                   // Apunta a la lista de usuarios
+
 
     // Instancia del usuario que mostraremos y su UID
     Usuario userToShow;
@@ -50,6 +51,7 @@ public class UserArtists extends Fragment {
 
         // Instancia de la configuración
         config = (FirebaseConfig) getActivity().getApplication();
+        referenciaUsuario = config.getReferenciaUsuarioLogeado();
         referenciaListaUsuarios = config.getReferenciaListaUsuarios();
 
         // Instancia de la configuración
@@ -65,6 +67,7 @@ public class UserArtists extends Fragment {
         }
 
         try{
+
             historial = (GridView) view.findViewById(R.id.user_artists_grid);
 
             // Seccion del grid y los albumes
@@ -81,15 +84,83 @@ public class UserArtists extends Fragment {
             userUID = config.getUserUID();
         }
 
-        // Descargamos la lista de usuarios
-        referenciaListaUsuarios.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+         /*
+            Comprobamos si queremos consultar los datos del mismo usuario o de otro diferente al tuyo
+            Si es del usuario, utilizamos su referencia directamente ahorrando datos
+         */
+        if(!userUID.contains(config.getUserUID())) {
 
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+            // Descargamos la lista de usuarios
+            referenciaListaUsuarios.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+
+                        try {
+                            Usuario usuario = userSnapshot.getValue(Usuario.class);
+
+                            if (usuario.getUID().equals(userUID)) {
+
+                                // Cuando encotremos el usuario anyadimos la infromación a la vista
+                                userToShow = usuario;
+
+                                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(usuario.getNombre());
+
+                                final Firebase referenciaMusicaContacto = new Firebase(config.getReferenciaListaUsuarios().toString() + "/" + usuario.getKey() + "/Artistas");
+
+                                // Descargamos la lista de usuarios
+
+                                referenciaMusicaContacto.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                                            FirebaseItem grupo = userSnapshot.getValue(FirebaseItem.class);
+                                            listCollectionArtist.add(userSnapshot.getKey() + "-" + grupo.getItemUrl());
+                                        }
+
+                                        try {
+                                            // Limpiamos los duplicados. Gracias al LinkedHashSet mantenemos el orden de los elementos
+                                            Set<String> hs = new LinkedHashSet<>(listCollectionArtist);
+                                            hs.addAll(listCollectionArtist);
+                                            myGridAdapter.clear();
+                                            myGridAdapter.addAll(hs);
+
+                                            // Setteamos el adapter
+                                            historial.setAdapter(myGridAdapter);
+
+                                            setGridViewHeightBasedOnChildren(historial, 2);
+                                        } catch (NullPointerException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(FirebaseError firebaseError) {
+                                    }
+                                });
+                            }
+                        } catch (NullPointerException e) {
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                }
+            });
+        }
+        else{
+
+            // Descargamos la lista de usuarios
+            referenciaUsuario.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
                     try {
-                        Usuario usuario = userSnapshot.getValue(Usuario.class);
+
+                        Usuario usuario = dataSnapshot.getValue(Usuario.class);
 
                         if (usuario.getUID().equals(userUID)) {
 
@@ -111,7 +182,7 @@ public class UserArtists extends Fragment {
                                         listCollectionArtist.add(userSnapshot.getKey() + "-" + grupo.getItemUrl());
                                     }
 
-                                    try{
+                                    try {
                                         // Limpiamos los duplicados. Gracias al LinkedHashSet mantenemos el orden de los elementos
                                         Set<String> hs = new LinkedHashSet<>(listCollectionArtist);
                                         hs.addAll(listCollectionArtist);
@@ -122,23 +193,21 @@ public class UserArtists extends Fragment {
                                         historial.setAdapter(myGridAdapter);
 
                                         setGridViewHeightBasedOnChildren(historial, 2);
-                                    }
-                                    catch (NullPointerException e){
-                                        e.printStackTrace();
-                                    }
+
+                                    } catch (NullPointerException e) {}
                                 }
 
                                 @Override
                                 public void onCancelled(FirebaseError firebaseError) {}
                             });
                         }
-                    } catch (NullPointerException e){}
+                    } catch (NullPointerException e) {}
                 }
-            }
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {}
-        });
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {}
+            });
+        }
 
         historial.setOnItemClickListener(new AdapterView.OnItemClickListener() { //Listener para el list
 

@@ -39,7 +39,6 @@ public class LoginActivity extends AppCompatActivity {
 
     // ArrayList con informacion de los usuarios
     ArrayList<Usuario> listaUsuarios = new ArrayList<>();
-    ArrayList<String> usuariosExistentes = new ArrayList<>();
 
     // Booleano auxiliar para el login
     boolean usuarioEncontrado = false;
@@ -116,7 +115,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     Usuario usuario = userSnapshot.getValue(Usuario.class);
-                    usuariosExistentes.add(usuario.getEmail());
                     listaUsuarios.add(usuario);
                 }
             }
@@ -189,8 +187,6 @@ public class LoginActivity extends AppCompatActivity {
                     Firebase nuevoUsuario = referenciaListaUsuarios.push();
                     Usuario usuario = new Usuario();
                     usuario.setKey(nuevoUsuario.getKey());
-                    usuario.setEmail(email);
-                    usuario.setPassword(password);
                     usuario.setUID(authData.getUid());
                     nuevoUsuario.setValue(usuario);
                     config.setReferenciaUsuarioLogeado(referenciaListaUsuarios.child(nuevoUsuario.getKey()));

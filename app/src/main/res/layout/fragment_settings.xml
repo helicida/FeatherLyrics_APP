@@ -13,7 +13,7 @@
         android:gravity="start"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:text="Mostrar notificaciones"
+        android:text="@string/settings_notificaciones"
         android:id="@+id/settings_mostrarToast"
         android:checked="true"
         android:textColor="#000000"
@@ -34,7 +34,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mostar una notificación con el nombre de pista y nombnre del artista de la canción en reproducción"
+        android:text="@string/settings_notificaciones_info"
         android:id="@+id/textView2"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -44,7 +44,7 @@
         android:gravity="start"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:text="Splash Screen"
+        android:text="@string/settings_splash"
         android:id="@+id/settings_mostarSplashScreen"
         android:checked="false"
         android:textColor="#000000"
@@ -64,7 +64,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mostrar el splash screen al iniciar la aplicación"
+        android:text="@string/settings_splash_info"
         android:id="@+id/textView3"
         android:layout_marginTop="26dp"
         android:layout_alignTop="@+id/settings_mostarSplashScreen"
@@ -75,7 +75,7 @@
         android:gravity="start"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:text="Tono aplicación"
+        android:text="@string/settings_tono"
         android:id="@+id/settings_sound"
         android:checked="false"
         android:textColor="#000000"
@@ -96,7 +96,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reproduce el sonido de la aplicación al inicio"
+        android:text="@string/settings_tono_info"
         android:id="@+id/textView4"
         android:layout_marginBottom="7dp"
         android:layout_alignBottom="@+id/settings_sound"
@@ -106,7 +106,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Limpiar BBDD"
+        android:text="@string/settings_limpiar_bbdd"
         android:id="@+id/settings_buttonBBDD"
         android:layout_marginTop="27dp"
         android:layout_below="@+id/textView7"
@@ -120,29 +120,31 @@
         android:layout_width="match_parent"
         android:background="#767b80"
         android:id="@+id/view"
-        android:layout_marginBottom="15dp"
-        android:layout_above="@+id/textView6"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/settings_sound"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Limpiar el historial de reproducciones"
+        android:text="@string/settings_historial"
         android:textSize="20dp"
         android:textStyle="bold"
         android:id="@+id/textView6"
-        android:layout_centerVertical="true"
+        android:textColor="#000000"
+        android:layout_below="@+id/view"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textColor="#000000" />
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vacíar la base de datos que contiene el historial de reproducciones"
+        android:text="@string/settings_historial_info"
         android:id="@+id/textView7"
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/textView6"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -150,7 +152,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CAMBIAR TONO"
+        android:text="@string/settings_cambiar_tono"
         android:id="@+id/settings_cambiarTono"
         android:layout_alignTop="@+id/settings_buttonBBDD"
         android:layout_alignRight="@+id/textView3"

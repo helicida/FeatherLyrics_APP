@@ -49,7 +49,13 @@ public class userSongsAdapter extends ArrayAdapter<String> {
                     .oval(false)
                     .build();
 
-            Picasso.with(getContext()).load(item.split("-")[2]).fit().centerCrop().transform(transformation).into(imagenGrupo);
+            Picasso.with(getContext())
+                    .load(item.split("-")[2])
+                    .error(R.drawable.loading_image)
+                    .placeholder(R.drawable.progress_animation)
+                    .fit().centerCrop()
+                    .transform(transformation)
+                    .into(imagenGrupo);
 
             nombreGrupo.setText(item.split("-")[1]);
             nombreCancion.setText(item.split("-")[0]);

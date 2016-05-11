@@ -5,48 +5,48 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@android:drawable/ic_menu_view"
-            android:title="Home" />
+            android:title="@string/nav_home" />
         <item
             android:id="@+id/nav_canciones"
             android:icon="@android:drawable/ic_media_play"
-            android:title="Canciones" />
+            android:title="@string/nav_canciones" />
         <item
             android:id="@+id/nav_discografia"
             android:icon="@android:drawable/ic_menu_gallery"
-            android:title="Discografia" />
+            android:title="@string/nav_discografia" />
 
         <item
             android:id="@+id/nav_descubrir"
             android:icon="@drawable/ic_map_white_36dp"
-            android:title="Descubrir" />
+            android:title="@string/nav_descubrir" />
 
         <item
             android:id="@+id/nav_noticias"
             android:icon="@android:drawable/ic_menu_week"
-            android:title="Noticias" />
+            android:title="@string/nav_noticias" />
 
         <item
             android:id="@+id/nav_local"
             android:icon="@android:drawable/ic_menu_agenda"
-            android:title="Reproducciones locales" />
+            android:title="@string/nav_reproducciones" />
     </group>
 
-    <item android:title="Ajustes">
+    <item android:title="@string/nav_category_ajustes">
         <menu>
             <item
                 android:id="@+id/nav_preferencias"
                 android:icon="@android:drawable/ic_menu_preferences"
-                android:title="Configuración" />
+                android:title="@string/nav_configuración" />
 
             <item
                 android:id="@+id/nav_bio"
                 android:icon="@android:drawable/ic_menu_info_details"
-                android:title="About" />
+                android:title="@string/nav_about" />
 
             <item
                 android:id="@+id/nav_salir"
                 android:icon="@android:drawable/ic_delete"
-                android:title="Salir" />
+                android:title="@string/nav_salir" />
         </menu>
     </item>
 </menu>

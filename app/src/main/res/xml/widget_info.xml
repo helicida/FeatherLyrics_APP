@@ -9,5 +9,5 @@
     android:initialLayout="@layout/widget"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen|keyguard"
-    android:previewImage="@drawable/feather_icon">
+    android:previewImage="@drawable/drawer_icon">
 </appwidget-provider>

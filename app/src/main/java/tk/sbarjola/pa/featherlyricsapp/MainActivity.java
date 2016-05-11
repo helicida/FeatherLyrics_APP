@@ -24,11 +24,12 @@ import tk.sbarjola.pa.featherlyricsapp.Discografia.Album;
 import tk.sbarjola.pa.featherlyricsapp.Discografia.Discografia;
 import tk.sbarjola.pa.featherlyricsapp.Home.About;
 import tk.sbarjola.pa.featherlyricsapp.Home.Home;
+import tk.sbarjola.pa.featherlyricsapp.Identificacion.LoginActivity;
 import tk.sbarjola.pa.featherlyricsapp.PerfilesUsuarios.BaseFragmentUser;
-import tk.sbarjola.pa.featherlyricsapp.PerfilesUsuarios.TabLayoutFragments.UserProfile;
 import tk.sbarjola.pa.featherlyricsapp.Mapa.OSMap;
 import tk.sbarjola.pa.featherlyricsapp.Noticias.Noticias;
 import tk.sbarjola.pa.featherlyricsapp.MusicReceiver.MusicBroadcastReceiver;
+import tk.sbarjola.pa.featherlyricsapp.PerfilesUsuarios.TabLayoutFragments.EditProfile;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Hacemos que autmaticamente arranque en el fragmento "Home"
         getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.fragment_enter_animation, R.anim.fragment_exit_animation, R.anim.fragment_enter_animation, R.anim.fragment_exit_animation)
                 .addToBackStack(null)
                 .replace(R.id.content_frame, new Noticias(), "home")
                 .commit();
@@ -154,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String tag = "canciones";
 
         getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.fragment_enter_animation, R.anim.fragment_exit_animation, R.anim.fragment_enter_animation, R.anim.fragment_exit_animation)
                 .replace(R.id.content_frame, fragment, tag)
                 .addToBackStack(null)
                 .commit();
@@ -172,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragment = new Discografia();
 
         getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.fragment_enter_animation, R.anim.fragment_exit_animation, R.anim.fragment_enter_animation, R.anim.fragment_exit_animation)
                 .addToBackStack(null)
                 .replace(R.id.content_frame, fragment)
                 .commit();
@@ -189,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragment = new BaseFragmentUser();
 
         getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.fragment_enter_animation, R.anim.fragment_exit_animation, R.anim.fragment_enter_animation, R.anim.fragment_exit_animation)
                 .addToBackStack(null)
                 .replace(R.id.content_frame, fragment)
                 .commit();
@@ -205,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragment = new Discografia();
 
         getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.fragment_enter_animation, R.anim.fragment_exit_animation, R.anim.fragment_enter_animation, R.anim.fragment_exit_animation)
                 .addToBackStack(null)
                 .replace(R.id.content_frame, fragment)
                 .commit();
@@ -212,18 +218,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.getMenu().getItem(2).setChecked(true);   // Marcamos el menu del navigation Drawer
     }
 
-    public void abrirReproduccionesLocales(){
+    public void abrirEditorPerfil(){
 
         checkBackStackOverhead();
 
-        // Función para llamar al fragment de canciones
-        fragment = new Home();
+        // Función para llamar al fragment de editar perfil
+        fragment = new EditProfile();
 
         getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.fragment_enter_animation, R.anim.fragment_exit_animation, R.anim.fragment_enter_animation, R.anim.fragment_exit_animation)
                 .addToBackStack(null)
                 .replace(R.id.content_frame, fragment)
                 .commit();
-
     }
 
     public void abrirPersonalProfile() {
@@ -233,10 +239,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         checkBackStackOverhead();
 
-        // Función para llamar al fragment de canciones
+        // Función para llamar al fragment del perfil personal
         fragment = new BaseFragmentUser();
 
         getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.fragment_enter_animation, R.anim.fragment_exit_animation, R.anim.fragment_enter_animation, R.anim.fragment_exit_animation)
                 .addToBackStack(null)
                 .replace(R.id.content_frame, fragment)
                 .commit();
@@ -252,6 +259,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         checkBackStackOverhead();
 
         getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.fragment_enter_animation, R.anim.fragment_exit_animation, R.anim.fragment_enter_animation, R.anim.fragment_exit_animation)
                 .addToBackStack(null)
                 .replace(R.id.content_frame, fragment)
                 .commit();
@@ -297,12 +305,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             transaccion = true;
         } else if (id == R.id.nav_salir) {
 
-            unregisterReceiver(broadcastReceiver);
+            try{
+                unregisterReceiver(broadcastReceiver);
+            }
+            catch(IllegalArgumentException e){}
 
             // Borramos la cuenta
             sharedPreferencesEditor = preferencias.edit();
             sharedPreferencesEditor.putBoolean("autologin", false);
             sharedPreferencesEditor.commit();
+
+            // Hacemos el intent al login
+            Intent loginIntent = new Intent().setClass(MainActivity.this, LoginActivity.class);
+            startActivity(loginIntent);
         }
 
         // Si el boleano es true llamamos al nuevo fragment
@@ -311,6 +326,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             checkBackStackOverhead();
 
             getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slideup, R.anim.slideout, R.anim.slideup, R.anim.slideout)
                     .addToBackStack(null)
                     .replace(R.id.content_frame, fragment, tag)
                     .commit();
@@ -329,8 +345,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         int numeroFragments = fm.getBackStackEntryCount();
 
-        // Cuando nos pasemos de 5 fragments cargados en la memoria, nos peta uno
-        if(numeroFragments > 5) {
+        // Cuando nos pasemos de 3 fragments cargados en la memoria, nos eliminará el primero añadido a la pila
+        if(numeroFragments > 3) {
             fm.popBackStack();
         }
     }

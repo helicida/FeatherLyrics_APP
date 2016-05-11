@@ -1,66 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.project.mistik.ContactActivity"
     tools:showIn="">
 
-    <android.support.v7.widget.CardView
+    <RelativeLayout
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/view2">
+        android:layout_height="550dp">
 
-        <LinearLayout
-            style=""
+        <android.support.v7.widget.CardView
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/thumbnail"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/user_icon" />
+            android:layout_height="wrap_content"
+            android:id="@+id/view2">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                style=""
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    style="style/TextAppearance.Medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-condensed"
-                    android:lineSpacingMultiplier="0.85"
-                    android:paddingBottom="4dp"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textStyle="bold"
-                    android:text="Feather Lyrics"/>
+                <ImageView
+                    android:id="@+id/thumbnail"
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/background_icon" />
 
-                <TextView
-                    style="style/TextAppearance.Small"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="Share your music"
-                    android:paddingTop="5dp" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="style/TextAppearance.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-condensed"
+                        android:lineSpacingMultiplier="0.85"
+                        android:paddingBottom="4dp"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textStyle="bold"
+                        android:text="Feather Lyrics"/>
+
+                    <TextView
+                        style="style/TextAppearance.Small"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="Share your music - http://feathermusic.tk/"
+                        android:paddingTop="5dp" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+        </android.support.v7.widget.CardView>
 
-</RelativeLayout>
+        <android.support.v7.widget.CardView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/view3"
+            android:layout_below="@+id/view2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="22dp">
+
+            <LinearLayout
+                style=""
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/imageSergi"
+                    android:layout_width="50dp"
+                    android:layout_height="90dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/user_icon"
+                    android:layout_weight="0.14" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="style/TextAppearance.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-condensed"
+                        android:lineSpacingMultiplier="0.85"
+                        android:paddingBottom="4dp"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textStyle="bold"
+                        android:text="Sergi Barjola Caparrós"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        style="style/TextAppearance.Small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="https://github.com/helicida"
+                        android:paddingTop="5dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/view4"
+            android:layout_marginTop="24dp"
+            android:layout_below="@+id/view3"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <LinearLayout
+                style=""
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/imageOriol"
+                    android:layout_width="50dp"
+                    android:layout_height="90dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/user_icon"
+                    android:layout_weight="0.14" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="style/TextAppearance.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-condensed"
+                        android:lineSpacingMultiplier="0.85"
+                        android:paddingBottom="4dp"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textStyle="bold"
+                        android:text="Oriol Cuñado Mozo"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        style="style/TextAppearance.Small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="https://github.com/48089748z"
+                        android:paddingTop="5dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/view5"
+            android:layout_marginTop="23dp"
+            android:layout_below="@+id/view4"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <LinearLayout
+                style=""
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/imageAlejandro"
+                    android:layout_width="50dp"
+                    android:layout_height="90dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/user_icon"
+                    android:layout_weight="0.14" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="style/TextAppearance.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-condensed"
+                        android:lineSpacingMultiplier="0.85"
+                        android:paddingBottom="4dp"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textStyle="bold"
+                        android:text="Alejandro Soriano Avilés"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        style="style/TextAppearance.Small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="https://github.com/47257165p"
+                        android:paddingTop="5dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+</ScrollView>

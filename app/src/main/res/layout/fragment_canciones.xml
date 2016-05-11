@@ -47,7 +47,7 @@
     </ScrollView>
 
     <TextView
-        android:text="Haz clic en el botón para buscar la letra de la canción que esté sonando"
+        android:text="@string/canciones_info"
         android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:textSize="20dp"

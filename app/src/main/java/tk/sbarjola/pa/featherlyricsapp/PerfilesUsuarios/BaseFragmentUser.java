@@ -43,9 +43,9 @@ public class BaseFragmentUser extends Fragment {
         getIDs(view);
         setEvents();
 
-        this.addUser("USUARIO");
-        this.addArtist("ARTISTAS");
-        this.addSongs("CANCIONES");
+        this.addUser(getString(R.string.tab_usuario));
+        this.addArtist(getString(R.string.tab_artistas));
+        this.addSongs(getString(R.string.tab_canciones));
 
         return view;
     }
@@ -59,7 +59,6 @@ public class BaseFragmentUser extends Fragment {
         viewPager.setAdapter(adapter);
 
         viewPager.setCurrentItem(1);
-
     }
 
     int selectedTabPosition;
@@ -128,6 +127,7 @@ public class BaseFragmentUser extends Fragment {
         fragmentChild.setArguments(bundle);
         adapter.addFrag(fragmentChild, pagename);
         adapter.notifyDataSetChanged();
+
         if (adapter.getCount() > 0)
             tabLayout.setupWithViewPager(viewPager);
 

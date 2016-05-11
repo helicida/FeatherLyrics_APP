@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Reproducciones locales"
+        android:text="@string/home_titulo"
         android:id="@+id/home_textoBienvenida"
         android:gravity="center"
         android:layout_alignParentTop="true"
@@ -35,7 +35,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lista de reproducciones Android"
+        android:text="@string/home_descripcion"
         android:id="@+id/home_instrucciones"
         android:gravity="center"
         android:layout_below="@+id/home_textoBienvenida"

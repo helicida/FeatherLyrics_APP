@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:text="FeatherLyrics, cliente de Vagalume y Spotify API."
+        android:text="@string/about_a"
         android:textColor="#000000" />
 
     <TextView
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="20dip"
         android:textSize="16sp"
-        android:text="Todas las letras son porporcionadas por Vagalume.com.br\n\n“This product uses a SPOTIFY API but is not endorsed, certified or otherwise approved in any way by Spotify. Spotify is the registered trade mark of the Spotify Group.”\n\n This project is aviable on GitHub \n\n https://github.com/helicida/FeatherLyrics_APP"
+        android:text="@string/about_b"
         android:autoLink="web"
         android:textColor="#000000" />
 

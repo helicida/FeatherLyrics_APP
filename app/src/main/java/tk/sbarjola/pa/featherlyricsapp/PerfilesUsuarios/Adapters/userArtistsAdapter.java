@@ -48,7 +48,13 @@ public class userArtistsAdapter extends ArrayAdapter<String> {
 
         // Le damos la iamgen
         ImageView imagenArtista = (ImageView) convertView.findViewById(R.id.album_adapter);
-        Picasso.with(getContext()).load(URLimagen).fit().centerCrop().into(imagenArtista);
+        Picasso.with(getContext())
+                .load(URLimagen)
+                .error(R.drawable.loading_image)
+                .placeholder(R.drawable.progress_animation)
+                .fit()
+                .centerCrop()
+                .into(imagenArtista);
 
         return convertView;
     }

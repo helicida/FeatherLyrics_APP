@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,13 @@ public class Home extends Fragment implements LoaderManager.LoaderCallbacks<Curs
 
         View view = inflater.inflate(R.layout.fragment_home, contenedor, false);
 
-        listView = (ListView) view.findViewById(R.id.home_listCanciones);
+        try{
+
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.toolbar_home);
+
+            listView = (ListView) view.findViewById(R.id.home_listCanciones);
+
+        } catch (NullPointerException e){}
 
         // Creamos y definimos el ListAdapter
         myListAdapter = new MusicListAdapter(
@@ -41,7 +48,7 @@ public class Home extends Fragment implements LoaderManager.LoaderCallbacks<Curs
         listView.setAdapter(myListAdapter); //Acoplem el adaptador
 
         // Cargamos las peliculas y las mostramos
-        showMovies();
+        showMusic();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //Listener para el list
 
@@ -68,7 +75,7 @@ public class Home extends Fragment implements LoaderManager.LoaderCallbacks<Curs
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public void showMovies(){
+    public void showMusic(){
         Cursor cursor = getContext().getContentResolver().query(
                 MusicColumns.CONTENT_URI,
                 null,

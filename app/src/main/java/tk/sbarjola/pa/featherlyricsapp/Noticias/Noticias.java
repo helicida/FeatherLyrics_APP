@@ -3,6 +3,7 @@ package tk.sbarjola.pa.featherlyricsapp.Noticias;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -82,17 +83,23 @@ public class Noticias extends Fragment{
 
         View fragmentoLista = inflater.inflate(R.layout.fragment_noticias, container, false);    //Definimos el fragment
 
-        // Asignamos el list a su variable
-        listaNoticias = (ListView) fragmentoLista.findViewById(R.id.noticias_listaNoticias);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.toolbar_noticias);
 
-        myListAdapter = new NoticiasAdapter(container.getContext(), 0, items);  // Definimos el adapter
-        listaNoticias.setAdapter(myListAdapter);                                // Acoplamos el adaptador
+        try{
 
-        listaNoticias.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {  //Listener para el list
-            // De momento no hace nada
-            }
-        });
+            // Asignamos el list a su variable
+            listaNoticias = (ListView) fragmentoLista.findViewById(R.id.noticias_listaNoticias);
+
+            myListAdapter = new NoticiasAdapter(container.getContext(), 0, items);  // Definimos el adapter
+            listaNoticias.setAdapter(myListAdapter);                                // Acoplamos el adaptador
+
+            listaNoticias.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {  //Listener para el list
+                    // De momento no hace nada
+                }
+            });
+
+        }catch (NullPointerException e){}
 
         return fragmentoLista;
     }

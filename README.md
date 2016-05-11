@@ -42,6 +42,7 @@ The application concept is fully modular, so the structure is based on a Navigat
 - Custom PreferenceFragment menu to custom the APP to your liking
 - "About" section with terms and conditions
 - Battery life friendly :)
+- The application is available in three languages: English, Spanish and Catalan.
 
 ## Which audio players are supported?
 
@@ -69,10 +70,10 @@ Feather Lyrics tracks the next players:
 <img src="https://i.imgur.com/3xFZWlF.png" width="250">
 <img src="http://i.imgur.com/Y4do4gK.png" width="250">
 <img src="http://i.imgur.com/aDUEhtE.png" width="250">
-<img src="http://i.imgur.com/tIGirYt.png" width="250">
+<img src="http://i.imgur.com/IcIJCIl.png" width="250">
 <img src="http://i.imgur.com/Iib4Plu.jpg" width="250">
 <img src="http://i.imgur.com/k27CaCs.png" width="250">
-<img src="http://i.imgur.com/tnExHHU.jpg" width="250">
+<img src="http://i.imgur.com/T4aZzis.png" width="250">
 <img src="http://i.imgur.com/1CDRmde.png" width="250">
 <img src="http://i.imgur.com/2GfK3RI.png" width="250">
 <img src="http://i.imgur.com/fkU3dhN.png" width="250">

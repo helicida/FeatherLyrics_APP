@@ -29,7 +29,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Titulo"
+                android:text="@string/album_titulo"
                 android:id="@+id/album_adapter_tituloAlbum"
                 android:textAlignment="gravity"
                 android:maxLines="2"
@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Band"
+                android:text="@string/album_subtitulo"
                 android:paddingLeft="3dp"
                 android:id="@+id/album_adapter_band"
                 android:textSize="12dp"

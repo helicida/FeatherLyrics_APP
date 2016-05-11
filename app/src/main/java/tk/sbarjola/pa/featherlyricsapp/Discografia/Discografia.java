@@ -40,6 +40,7 @@ import tk.sbarjola.pa.featherlyricsapp.Discografia.Adapters.DiscografiaAdapter;
 import tk.sbarjola.pa.featherlyricsapp.MainActivity;
 import tk.sbarjola.pa.featherlyricsapp.R;
 
+
 public class Discografia extends Fragment {
 
     // Datos de la APIf
@@ -52,7 +53,7 @@ public class Discografia extends Fragment {
     private String artistSpotify = "Arista no disponible";          // Nombre del artista de la imagen de Spotify
 
     //  Booleano que determina si vagalume ha encontrado
-    private boolean vagalumeFound = true;
+    private boolean vagalumeFound = false;
 
     // Variables y Adapters
     private servicioDiscografiaRetrofit servicioDiscografia;   // Interfaz para descargar la discografia
@@ -353,32 +354,32 @@ public class Discografia extends Fragment {
 
                     final ArtistInfo resultado = response.body();
 
-                        if (response.isSuccess()) {
+                    if (response.isSuccess()) {
 
-                            String datosArtista = "";   // String que contiene la popularidad y generos del artista
+                        String datosArtista = "";   // String que contiene la popularidad y generos del artista
 
-                            if(resultado.getArtist() != null){
+                        if(resultado.getArtist() != null){
 
-                                datosArtista = resultado.getArtist().getBio().getSummary();
+                            datosArtista = resultado.getArtist().getBio().getSummary();
 
-                                String toDelete = "There are multiple artists with this name:";
+                            String toDelete = "There are multiple artists with this name:";
 
-                                if (datosArtista.contains(toDelete)){
-                                    datosArtista = datosArtista.substring(toDelete.length() + 5, datosArtista.length());
-                                }
+                            if (datosArtista.contains(toDelete)){
+                                datosArtista = datosArtista.substring(toDelete.length() + 5, datosArtista.length());
+                            }
 
-                                TextView bioArtista = (TextView) getView().findViewById(R.id.discografia_bio);
+                            TextView bioArtista = (TextView) getView().findViewById(R.id.discografia_bio);
 
-                                if(!datosArtista.substring(0,9).contains("<a href=") && !datosArtista.substring(0,9).contains("Fix your tags to")){
-                                    bioArtista.setText(datosArtista);  // Asignamos los datos del artista
-                                }
-                                else {
-                                    bioArtista.setText("Biografía no encontrada");
-                                }
-                          }
-                        } else {
-                            Toast.makeText(getContext(), "Biografía del artista no disponible", Toast.LENGTH_SHORT).show(); // Mostramos un toast
+                            if(!datosArtista.substring(0,9).contains("<a href=") && !datosArtista.substring(0,9).contains("Fix your tags to")){
+                                bioArtista.setText(datosArtista);  // Asignamos los datos del artista
+                            }
+                            else {
+                                bioArtista.setText("Biografía no encontrada");
+                            }
                         }
+                    } else {
+                        Toast.makeText(getContext(), "Biografía del artista no disponible", Toast.LENGTH_SHORT).show(); // Mostramos un toast
+                    }
                 }catch (NullPointerException e){}
             }
 

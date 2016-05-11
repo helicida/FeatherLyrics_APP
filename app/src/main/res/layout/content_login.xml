@@ -29,28 +29,58 @@
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/passwordWrapper"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:textColorHint="#ffffff"
                 android:layout_below="@+id/usernameWrapper"
                 android:layout_alignLeft="@+id/usernameWrapper"
-                android:layout_alignStart="@+id/usernameWrapper"
+                android:layout_alignStart="@+id/login_logo"
                 android:layout_alignRight="@+id/usernameWrapper"
-                android:layout_alignEnd="@+id/usernameWrapper">
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/login_TextPassword"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:textColor="#ffffff"
+                    android:textColorHighlight="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:layout_below="@+id/login_TextEmail"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/usernameWrapper"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:textColorHint="#ffffff"
                 android:layout_below="@+id/login_logo"
                 android:layout_alignLeft="@+id/login_logo"
                 android:layout_alignStart="@+id/login_logo"
                 android:layout_alignRight="@+id/login_logo"
-                android:layout_alignEnd="@+id/login_logo"
                 android:layout_marginTop="49dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/login_TextEmail"
+                    android:hint="Email"
+                    android:maxLines="1"
+                    android:textColor="#ffffff"
+                    android:textColorHighlight="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/passwordWrapper" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -70,16 +100,16 @@
                 android:textSize="40dp"
                 android:id="@+id/textView8"
                 android:textColor="#ffffff"
+                android:layout_marginBottom="62dp"
                 android:layout_alignBottom="@+id/login_logo"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="44dp" />
+                android:layout_alignParentEnd="true" />
 
             <Switch
                 android:gravity="start"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:text="Recordar usuario"
+                android:text="@string/login_record"
                 android:id="@+id/login_saveAcc"
                 android:checked="false"
                 android:textColor="#ffffff"
@@ -89,75 +119,47 @@
                 android:paddingTop="0dp"
                 android:paddingBottom="0dp"
                 android:showText="false"
-                android:layout_marginTop="43dp"
-                android:layout_below="@+id/login_info"
-                android:layout_alignRight="@+id/login_ButtonRegister"
-                android:layout_alignEnd="@+id/login_ButtonRegister"
+                android:layout_marginTop="42dp"
+                android:layout_below="@+id/passwordWrapper"
                 android:layout_alignLeft="@+id/login_ButtonLogin"
-                android:layout_alignStart="@+id/login_ButtonLogin" />
+                android:layout_alignStart="@+id/login_ButtonLogin"
+                android:layout_alignRight="@+id/login_ButtonRegister"
+                android:layout_alignEnd="@+id/login_ButtonRegister" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Entrar"
+                android:text="@string/login_button_entrar"
                 android:id="@+id/login_ButtonLogin"
+                android:layout_marginLeft="38dp"
+                android:layout_marginStart="38dp"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="62dp"
-                android:layout_marginStart="62dp" />
+                android:layout_alignLeft="@+id/passwordWrapper"
+                android:layout_alignStart="@+id/passwordWrapper" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Registrarse"
+                android:text="@string/login_button_registrarse"
                 android:id="@+id/login_ButtonRegister"
+                android:layout_marginRight="25dp"
+                android:layout_marginEnd="25dp"
                 android:layout_alignParentBottom="true"
-                android:layout_toRightOf="@+id/login_ButtonLogin"
-                android:layout_toEndOf="@+id/login_ButtonLogin"
-                android:layout_marginLeft="39dp"
-                android:layout_marginStart="39dp" />
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/login_TextEmail"
-                android:hint="Email"
-                android:maxLines="1"
-                android:textColor="#ffffff"
-                android:textColorHighlight="#ffffff"
-                android:textColorHint="#ffffff"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/passwordWrapper" />
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/login_TextPassword"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:textColor="#ffffff"
-                android:textColorHighlight="#ffffff"
-                android:textColorHint="#ffffff"
-                android:layout_below="@+id/login_TextEmail"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
+                android:layout_alignRight="@+id/passwordWrapper"
+                android:layout_alignEnd="@+id/passwordWrapper" />
+            
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:id="@+id/login_info"
-                android:layout_marginTop="35dp"
-                android:layout_below="@+id/login_TextPassword"
+                android:gravity="center_horizontal"
+                android:textColor="#ffffff"
+                android:layout_alignBottom="@+id/login_saveAcc"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:gravity="center_horizontal"
-                android:textColor="#ffffff" />
+                android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
 

@@ -40,7 +40,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingBottom="5dp"
-        android:text="Tú música, nuestra música"
+        android:text="@string/drawer_description"
         android:id="@+id/textView"
         android:textColor="#819fb0"
         android:layout_alignParentBottom="true"

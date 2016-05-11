@@ -112,7 +112,7 @@ public class SettingsActivityFragment extends PreferenceFragment {
                         null,
                         null);
 
-                Toast.makeText(getActivity().getBaseContext(), "Se ha limpiado la base de datos correctamente", Toast.LENGTH_SHORT).show(); // Mostramos un toast
+                Toast.makeText(getActivity().getBaseContext(), R.string.toast_bbdd_settings, Toast.LENGTH_SHORT).show(); // Mostramos un toast
             }
         });
 
