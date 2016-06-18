@@ -27,18 +27,18 @@
             android:layout_marginRight="10dp"
             android:background="@color/principal">
 
-            <android.support.design.widget.TextInputLayout
+            <com.github.florent37.materialtextfield.MaterialTextField
                 android:id="@+id/passwordWrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:textColorHint="#ffffff"
                 android:layout_below="@+id/usernameWrapper"
+                android:layout_marginTop="10dp"
                 android:layout_alignLeft="@+id/usernameWrapper"
                 android:layout_alignStart="@+id/login_logo"
                 android:layout_alignRight="@+id/usernameWrapper"
-                >
+                app:mtf_image="@drawable/ic_vpn_key_blue_grey_300_36dp">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -47,27 +47,25 @@
                     android:hint="Password"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:textColor="#ffffff"
-                    android:textColorHighlight="#ffffff"
                     android:textColorHint="#ffffff"
                     android:layout_below="@+id/login_TextEmail"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.github.florent37.materialtextfield.MaterialTextField>
 
-            <android.support.design.widget.TextInputLayout
+            <com.github.florent37.materialtextfield.MaterialTextField
                 android:id="@+id/usernameWrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:textColorHint="#ffffff"
                 android:layout_below="@+id/login_logo"
                 android:layout_alignLeft="@+id/login_logo"
                 android:layout_alignStart="@+id/login_logo"
                 android:layout_alignRight="@+id/login_logo"
-                android:layout_marginTop="49dp">
+                android:layout_marginTop="5dp"
+                app:mtf_image="@drawable/ic_email_blue_grey_300_36dp">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -75,14 +73,11 @@
                     android:id="@+id/login_TextEmail"
                     android:hint="Email"
                     android:maxLines="1"
-                    android:textColor="#ffffff"
-                    android:textColorHighlight="#ffffff"
-                    android:textColorHint="#ffffff"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/passwordWrapper" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.github.florent37.materialtextfield.MaterialTextField>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -164,6 +159,5 @@
         </RelativeLayout>
 
     </ScrollView>
-
 
 </RelativeLayout>

@@ -16,6 +16,8 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.github.florent37.materialtextfield.MaterialTextField;
+
 import java.util.ArrayList;
 
 import tk.sbarjola.pa.featherlyricsapp.Firebase.FirebaseConfig;
@@ -36,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     Button buttonLogin;         // Boton para loggearse
     Button buttonRegister;      // Boton para registarse en la aplicación
     TextView info;              // Info del intento de login
+    MaterialTextField pass;     // MaterialField de la contraseña
+    MaterialTextField user;     // MaterialField del usuario
 
     // ArrayList con informacion de los usuarios
     ArrayList<Usuario> listaUsuarios = new ArrayList<>();
@@ -75,6 +79,12 @@ public class LoginActivity extends AppCompatActivity {
         buttonRegister = (Button) this.findViewById(R.id.login_ButtonRegister);
         info = (TextView) this.findViewById(R.id.login_info);
         recordarCuenta = (Switch) this.findViewById(R.id.login_saveAcc);
+        pass = (MaterialTextField) this.findViewById(R.id.passwordWrapper);
+        user = (MaterialTextField) this.findViewById(R.id.usernameWrapper);
+
+        // Desplegamos los campos del login
+        pass.expand();
+        user.expand();
 
         boolean autologin = preferencias.getBoolean("autologin", false);
 
