@@ -4,8 +4,8 @@ This repository contains the source code for the Feather Lyrics (Android APP).
 
 ## How does it work?
 
-The APP's puts working on background a BroadcastReceiver that gets listens at the song and artist name from the the current playing track on Android media.
-When the user interface is opened, the APP takes the data collected by the BroadcastReceiver. When requested it, lyrics from the actual song are downloaded.
+The APP's puts working on background a BroadcastReceiver that pulls out the song and artist name from the the current playing track on Android media.
+When the user interface is opened, the APP takes the data collected by the BroadcastReceiver. When its demanded, the lyrics from the actual played song are downloaded.
 
 · API Rest Services:
 
