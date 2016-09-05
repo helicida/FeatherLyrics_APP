@@ -86,6 +86,9 @@ public class LoginActivity extends AppCompatActivity {
         pass.expand();
         user.expand();
 
+        pass.setClickable(false);
+        user.setClickable(false);
+
         boolean autologin = preferencias.getBoolean("autologin", false);
 
         // Autologin

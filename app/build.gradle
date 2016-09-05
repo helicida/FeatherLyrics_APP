@@ -34,7 +34,7 @@ dependencies {
     compile 'com.android.support:design:24.0.0'
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:support-v4:+'
-    compile 'com.squareup.retrofit:retrofit:+'
+    compile 'com.squareup.retrofit:retrofit:2.0.0-beta3'
     compile 'com.squareup.retrofit:converter-gson:+'
     compile 'com.squareup.picasso:picasso:+'
     compile 'com.github.markushi:circlebutton:1.1'

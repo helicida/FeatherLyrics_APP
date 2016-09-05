@@ -20,7 +20,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:fillViewport="true"
-        android:isScrollContainer="false" >
+        android:isScrollContainer="false"
+        android:layout_above="@+id/canciones_circleButton">
 
         <LinearLayout
             android:layout_width="match_parent"

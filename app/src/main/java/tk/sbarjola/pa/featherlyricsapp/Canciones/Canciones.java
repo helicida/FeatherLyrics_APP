@@ -425,7 +425,7 @@ public class Canciones extends Fragment{
 
     public String filtrarTitulo(String titulo){
 
-        // Metodo que elimina palabras clavesde los titulos
+        // Metodo que elimina palabras clave de los titulos
 
         String tituloFiltrado = titulo;
         tituloFiltrado = tituloFiltrado.replace(" - ", "");
