@@ -26,20 +26,26 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.squareup.picasso.Transformation;
 
+import org.osmdroid.ResourceProxy;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.clustering.RadiusMarkerClusterer;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.MarkerInfoWindow;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.tileprovider.tilesource.bing.BingMapTileSource;
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.util.ResourceProxyImpl;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
+
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Locale;
+
 import tk.sbarjola.pa.featherlyricsapp.Firebase.FirebaseItem;
 import tk.sbarjola.pa.featherlyricsapp.Firebase.FirebaseConfig;
 import tk.sbarjola.pa.featherlyricsapp.Firebase.Usuario;
@@ -68,6 +74,9 @@ public class OSMap extends Fragment {
     ArrayList<String> grupoContacto = new ArrayList<>(); // Grupo del otro contacto
     String gruposEnComun = "";                           // Grupos en común con otro contacto
 
+    /*
+    Clase en la que personalizamos nuestro marcador
+     */
     private class UserMarkerInfo extends MarkerInfoWindow {
 
         public UserMarkerInfo(int layoutResId, final MapView mapView) {
@@ -141,7 +150,6 @@ public class OSMap extends Fragment {
         // Declaramos el mapa
         map = (MapView) view.findViewById(R.id.map);
         map.setTilesScaledToDpi(true);
-        map.setTileSource(TileSourceFactory.MAPNIK);
 
         try{
 
@@ -324,8 +332,11 @@ public class OSMap extends Fragment {
     private void ajustarMapa() {
 
         try{
+
+            // Tiles
+            map.setTileSource(TileSourceFactory.CYCLEMAP);
+
             // Ajustamos los valores
-            map.setTileSource(TileSourceFactory.MAPQUESTOSM);
             map.setTilesScaledToDpi(true);
 
             // Activamos el "pinzado" y el multitocuh
