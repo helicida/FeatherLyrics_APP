@@ -222,7 +222,7 @@ public class UserArtists extends Fragment {
 
                 // Y lo mandamos al fragment de canciones
                 ((MainActivity) getActivity()).setDiscographyStart(artist);
-                ((MainActivity) getActivity()).abrirArtistas();
+                ((MainActivity) getActivity()).abrirDiscografia();
 
             }
         });

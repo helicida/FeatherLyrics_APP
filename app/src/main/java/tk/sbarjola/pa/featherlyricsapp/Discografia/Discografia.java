@@ -1,5 +1,4 @@
 package tk.sbarjola.pa.featherlyricsapp.Discografia;
-
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
@@ -22,6 +21,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import retrofit.Call;
 import retrofit.Callback;
@@ -39,6 +43,7 @@ import tk.sbarjola.pa.featherlyricsapp.APIs.Vagalume.Discografia.ListDiscografia
 import tk.sbarjola.pa.featherlyricsapp.Discografia.Adapters.DiscografiaAdapter;
 import tk.sbarjola.pa.featherlyricsapp.MainActivity;
 import tk.sbarjola.pa.featherlyricsapp.R;
+import tk.sbarjola.pa.featherlyricsapp.TrackingData;
 
 
 public class Discografia extends Fragment {
@@ -49,7 +54,7 @@ public class Discografia extends Fragment {
     private String URLVagalume = "";                                // Parte del medio que será el artista en minusculas y los espacios cambiados por guiones
     private String URLSpotify = "";                                 // Spotify
     private String URLLastFm = "";                                  // LastFM
-    private String artist = "";                                     // Nombre del artista
+    private String artist = "no artist";                            // Nombre del artista
     private String artistSpotify = "Arista no disponible";          // Nombre del artista de la imagen de Spotify
 
     //  Booleano que determina si vagalume ha encontrado
@@ -70,6 +75,13 @@ public class Discografia extends Fragment {
             .build();
 
     @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
@@ -80,26 +92,9 @@ public class Discografia extends Fragment {
     public void onStart() { //Cada vez que se abra el fragment que se descargen las noticias
         super.onStart();
 
-        artist = ((MainActivity) getActivity()).getDiscographyStart();
+        EventBus.getDefault().register(this);
 
-        if (artist.equals("no artist")){
-            artist = "Iron Maiden";
-        }
-
-        // Descargar discografía e imagen
-        DescargarDiscografia descargarDiscografia = new DescargarDiscografia();  // Instanciams nuestro asyncTask para descargar en segundo plano las noticias
-        DescargarArtista descargarArt = new DescargarArtista();                  // Lo mismo para los datos del artista
-        descargarDiscografia.execute();                                          // Y lo ejecutamos
-        descargarArt.execute();
-
-        // Descargar info artista
-
-        URLLastFm = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=" + artist.replace("-", "") + "&api_key=29d77eab70a48896e7b80f7d5977a5be&format=json";
-
-        DescargarInfo info = new DescargarInfo();                                // Lo mismo para la biografia del artista
-        info.execute();                                                          // Y ejecutamos tambien
-
-        ((MainActivity) getActivity()).setDiscographyStart(artist);
+        gestionDatos();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -220,8 +215,6 @@ public class Discografia extends Fragment {
                         if (myGridAdapter.getCount() != 0) {
                             setGridViewHeightBasedOnChildren(gridDiscos, 2);
                         }
-
-
 
                     } catch (NullPointerException e) {}
 
@@ -432,6 +425,35 @@ public class Discografia extends Fragment {
             return null;
         }
     }
+
+    public void gestionDatos(){
+
+        if (artist.equals("no artist")){
+            artist = "Iron Maiden";
+        }
+
+        // Descargar discografía e imagen
+        DescargarDiscografia descargarDiscografia = new DescargarDiscografia();  // Instanciams nuestro asyncTask para descargar en segundo plano las noticias
+        DescargarArtista descargarArt = new DescargarArtista();                  // Lo mismo para los datos del artista
+        descargarDiscografia.execute();                                          // Y lo ejecutamos
+        descargarArt.execute();
+
+        // Descargar info artista
+
+        URLLastFm = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=" + artist.replace("-", "") + "&api_key=29d77eab70a48896e7b80f7d5977a5be&format=json";
+
+        DescargarInfo info = new DescargarInfo();                                // Lo mismo para la biografia del artista
+        info.execute();                                                          // Y ejecutamos tambien
+
+        ((MainActivity) getActivity()).setDiscographyStart(artist);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void extraerInfoMusica(TrackingData data) {
+        artist = data.getDiscographyStart();
+        gestionDatos();
+    }
+
 
     // Métodos auxiliares que calculan como expandir el list view y el gridView
 

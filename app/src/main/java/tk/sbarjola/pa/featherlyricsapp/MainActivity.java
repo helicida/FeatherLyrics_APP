@@ -18,6 +18,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.greenrobot.eventbus.EventBus;
+
 import tk.sbarjola.pa.featherlyricsapp.APIs.Vagalume.Discografia.Item;
 import tk.sbarjola.pa.featherlyricsapp.Canciones.Canciones;
 import tk.sbarjola.pa.featherlyricsapp.Discografia.Album;
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         // Ajustamos el navigationView
@@ -124,13 +126,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void actualizarMusica(){
 
-        // Con esta función actualizamos la letra de la cancion en reproduccion el el fragment canciones
+        TrackingData data = new TrackingData();
 
-        Canciones canciones = (Canciones) getSupportFragmentManager().findFragmentByTag("canciones");
+        data.setPlayingArtist(playingArtist);
+        data.setPlayingTrack(playingTrack);
+        data.setSearchedArtist(searchedArtist);
+        data.setSearchedTrack(searchedTrack);
 
-        if (canciones != null) {
-            canciones.setSong(playingArtist, playingTrack);
-        }
+        EventBus.getDefault().postSticky(data);
     }
 
     @Override
@@ -163,6 +166,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.getMenu().getItem(1).setChecked(true);   // Marcamos el menu del navigation Drawer
 
+        TrackingData data = new TrackingData();
+
+        data.setPlayingArtist(playingArtist);
+        data.setPlayingTrack(playingTrack);
+        data.setSearchedArtist(searchedArtist);
+        data.setSearchedTrack(searchedTrack);
+
+        EventBus.getDefault().postSticky(data);
+
         getSupportActionBar().setTitle("Canciones");    // Cambiamos el titulo del ActionBar
     }
 
@@ -182,6 +194,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.getMenu().getItem(2).setChecked(true);   // Marcamos el menu del navigation Drawer
 
+        TrackingData data = new TrackingData();
+        data.setDiscographyStart(discographyStart);
+
+        EventBus.getDefault().postSticky(data);
+
         getSupportActionBar().setTitle("Discografia");    // Cambiamos el titulo del ActionBar
     }
 
@@ -200,22 +217,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.getMenu().getItem(0).setChecked(true);   // Marcamos el menu del navigation Drawer
 
-    }
-
-    public void abrirArtistas() {
-
-        checkBackStackOverhead();
-
-        // Función para llamar al fragment de canciones
-        fragment = new Discografia();
-
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.fragment_enter_animation, R.anim.fragment_exit_animation, R.anim.fragment_enter_animation, R.anim.fragment_exit_animation)
-                .addToBackStack(null)
-                .replace(R.id.content_frame, fragment)
-                .commit();
-
-        navigationView.getMenu().getItem(2).setChecked(true);   // Marcamos el menu del navigation Drawer
     }
 
     public void abrirEditorPerfil(){
@@ -282,9 +283,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragment = new BaseFragmentUser();
             transaccion = true;
         }else if (id == R.id.nav_canciones) {
-            fragment = new Canciones();
-            transaccion = true;
-            tag = "canciones";
+            abrirCanciones();
         }else if (id == R.id.nav_discografia) {
             fragment = new Discografia();
             transaccion = true;
@@ -360,9 +359,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
         switch(item.getItemId()) {
             case android.R.id.home:
                 drawer.openDrawer(GravityCompat.START);

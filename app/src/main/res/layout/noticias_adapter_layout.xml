@@ -45,7 +45,7 @@
         android:layout_below="@+id/list_descripcion"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginBottom="15dp"/>
 
     <TextView
         android:layout_width="210dp"

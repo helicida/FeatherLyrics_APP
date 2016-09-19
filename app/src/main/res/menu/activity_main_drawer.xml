@@ -31,21 +31,20 @@
             android:title="@string/nav_reproducciones" />
     </group>
 
-    <item android:title="@string/nav_category_ajustes">
+    <item
+        android:title="@string/nav_category_ajustes"
+        android:icon="@android:drawable/ic_menu_preferences">
         <menu>
             <item
                 android:id="@+id/nav_preferencias"
-                android:icon="@android:drawable/ic_menu_preferences"
                 android:title="@string/nav_configuración" />
 
             <item
                 android:id="@+id/nav_bio"
-                android:icon="@android:drawable/ic_menu_info_details"
                 android:title="@string/nav_about" />
 
             <item
                 android:id="@+id/nav_salir"
-                android:icon="@android:drawable/ic_delete"
                 android:title="@string/nav_salir" />
         </menu>
     </item>

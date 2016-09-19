@@ -50,4 +50,5 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.2.1'
     compile 'com.github.florent37:materialtextfield:1.0.5'
     compile 'org.osmdroid:osmdroid-third-party:5.0.1@aar'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

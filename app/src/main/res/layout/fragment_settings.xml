@@ -24,52 +24,22 @@
         android:paddingTop="0dp"
         android:paddingBottom="0dp"
         android:showText="false"
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/settings_notificaciones_info"
         android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Switch
-        android:gravity="start"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:text="@string/settings_splash"
-        android:id="@+id/settings_mostarSplashScreen"
-        android:checked="false"
-        android:textColor="#000000"
-        android:textAlignment="viewStart"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:paddingRight="30dp"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-        android:showText="false"
-        android:layout_below="@+id/settings_mostrarToast"
+        android:layout_alignTop="@+id/settings_mostrarToast"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/settings_mostrarToast"
-        android:layout_alignEnd="@+id/settings_mostrarToast" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/settings_splash_info"
-        android:id="@+id/textView3"
-        android:layout_marginTop="26dp"
-        android:layout_alignTop="@+id/settings_mostarSplashScreen"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginTop="29dp" />
 
     <Switch
         android:gravity="start"
@@ -86,12 +56,12 @@
         android:paddingTop="0dp"
         android:paddingBottom="0dp"
         android:showText="false"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/textView2"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -108,12 +78,9 @@
         android:layout_height="wrap_content"
         android:text="@string/settings_limpiar_bbdd"
         android:id="@+id/settings_buttonBBDD"
-        android:layout_marginTop="27dp"
         android:layout_below="@+id/textView7"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="35dp"
-        android:layout_marginStart="35dp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp" />
 
     <View
         android:layout_height="1dp"
@@ -154,8 +121,7 @@
         android:layout_height="wrap_content"
         android:text="@string/settings_cambiar_tono"
         android:id="@+id/settings_cambiarTono"
-        android:layout_alignTop="@+id/settings_buttonBBDD"
-        android:layout_alignRight="@+id/textView3"
-        android:layout_alignEnd="@+id/textView3" />
+        android:layout_below="@+id/settings_buttonBBDD"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

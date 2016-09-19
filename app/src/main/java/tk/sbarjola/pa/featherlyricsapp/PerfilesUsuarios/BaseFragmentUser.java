@@ -47,6 +47,9 @@ public class BaseFragmentUser extends Fragment {
         this.addArtist(getString(R.string.tab_artistas));
         this.addSongs(getString(R.string.tab_canciones));
 
+        // Abrimos la primera página
+        viewPager.setCurrentItem(0);
+
         return view;
     }
 

@@ -26,7 +26,6 @@ public class SettingsActivityFragment extends PreferenceFragment {
     Button buttonBBDD;                  // Button con el que limpiamos la BBDD
     Button buttonTono;                  // Button con el que cambiamos el tono de la APP
     Switch toastSwitch;                 // Switch que gestiona el TOAST de las canciones
-    Switch splashSwitch;                // Siwtch que gestiona el splash screen
     Switch soundSwitch;                 // Switch que gestiona el tono de la aplicación
 
     SharedPreferences.Editor sharedPreferencesEditor;   // SharedPreferenceEditor que usaremos para modificar las settings
@@ -45,13 +44,11 @@ public class SettingsActivityFragment extends PreferenceFragment {
         buttonTono = (Button) settingsActivity.findViewById(R.id.settings_cambiarTono);
         buttonBBDD = (Button) settingsActivity.findViewById(R.id.settings_buttonBBDD);
         toastSwitch = (Switch) settingsActivity.findViewById(R.id.settings_mostrarToast);
-        splashSwitch = (Switch) settingsActivity.findViewById(R.id.settings_mostarSplashScreen);
         soundSwitch = (Switch) settingsActivity.findViewById(R.id.settings_sound);
 
         // Establecemos por la opción predefinida
 
         toastSwitch.setChecked(myPreferences.getBoolean("toastNotificacion", true));
-        splashSwitch.setChecked(myPreferences.getBoolean("splash", true));
         soundSwitch.setChecked(myPreferences.getBoolean("sound", true));
 
         // Listeners para los switch y el button
@@ -67,22 +64,6 @@ public class SettingsActivityFragment extends PreferenceFragment {
                 } else {
                     sharedPreferencesEditor = myPreferences.edit();
                     sharedPreferencesEditor.putBoolean("toastNotificacion", false);
-                    sharedPreferencesEditor.commit();
-                }
-            }
-        });
-
-        splashSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if (isChecked) {
-                    sharedPreferencesEditor = myPreferences.edit();
-                    sharedPreferencesEditor.putBoolean("splash", true);
-                    sharedPreferencesEditor.commit();
-                } else {
-                    sharedPreferencesEditor = myPreferences.edit();
-                    sharedPreferencesEditor.putBoolean("splash", false);
                     sharedPreferencesEditor.commit();
                 }
             }
