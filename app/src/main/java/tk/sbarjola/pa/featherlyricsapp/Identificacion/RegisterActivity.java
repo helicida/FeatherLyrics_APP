@@ -12,6 +12,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -20,7 +21,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -100,6 +100,9 @@ public class RegisterActivity extends AppCompatActivity implements LocationListe
         imagenUsuario = (ImageView) this.findViewById(R.id.editProfile_profilePic);
 
         dialog = ProgressDialog.show(this, "", "Localizando tu posición..."); // Dialog que mostrará localizando
+
+        permisoLocalizacion();
+        permisoCamara();
 
         // Localizacion
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -213,6 +216,59 @@ public class RegisterActivity extends AppCompatActivity implements LocationListe
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+
+    // Permisos de Android (Marshmallow hacia arriba)
+
+    public void permisoLocalizacion(){
+
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        if (!(permissionCheck == PackageManager.PERMISSION_GRANTED)) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+
+            }
+            else {
+                // do request the permission
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 8);
+            }
+        }
+    }
+
+    public void permisoCamara(){
+
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+
+        if (!(permissionCheck == PackageManager.PERMISSION_GRANTED)) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+
+            }
+            else {
+                // do request the permission
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 8);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+
+        switch (requestCode) {
+            case 8: {
+                // grantResults[0] = -1
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                }
+                else {
+
+                }
+                return;
+            }
+        }
     }
 
 }
