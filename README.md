@@ -65,16 +65,18 @@ Feather Lyrics tracks the next players:
 
 ## Screenshots
 
-<img src="http://i.imgur.com/DvU2PgC.png" width="250">
-<img src="http://i.imgur.com/N3FMvXL.png" width="250">
-<img src="https://i.imgur.com/3xFZWlF.png" width="250">
-<img src="http://i.imgur.com/Y4do4gK.png" width="250">
-<img src="http://i.imgur.com/aDUEhtE.png" width="250">
-<img src="http://i.imgur.com/IcIJCIl.png" width="250">
-<img src="http://i.imgur.com/Iib4Plu.jpg" width="250">
-<img src="http://i.imgur.com/k27CaCs.png" width="250">
-<img src="http://i.imgur.com/T4aZzis.png" width="250">
-<img src="http://i.imgur.com/1CDRmde.png" width="250">
+
+<img src="http://i.imgur.com/CtvBySK.png" width="250">
+<img src="http://i.imgur.com/yXLIj4A.png" width="250">
+<img src="http://i.imgur.com/NEjmdy5.png" width="250">
+<img src="http://i.imgur.com/Xb1VGsz.png" width="250">
+<img src="http://i.imgur.com/PDdeapV.png" width="250">
+<img src="http://i.imgur.com/6oxqY16.png" width="250">
+<img src="http://i.imgur.com/40IY3kK.png" width="250">
+<img src="http://i.imgur.com/v0SNTCu.png" width="250">
+<img src="http://i.imgur.com/Kf3KNpZ.png" width="250">
+<img src="http://i.imgur.com/n55x9to.png" width="250">
+<img src="http://i.imgur.com/qh7VuIU.png" width="250">
 <img src="http://i.imgur.com/2GfK3RI.png" width="250">
-<img src="http://i.imgur.com/fkU3dhN.png" width="250">
+<img src="http://i.imgur.com/S3VRpCz.png" width="250">
 <img src="http://i.imgur.com/5qANarU.jpg" width="250">
