@@ -28,14 +28,14 @@ The application concept is fully modular, so the structure is based on a Navigat
 
 - Follows the Material Design philosophy
 - User friendly interface
-- On background BroadcastReceiver tracking your playing music
+- On background BroadcastReceiver tracking the playing music
 - Automatic current playing song search
 - Artist discography searching menu
 - Played songs history (using a ContentProvider)
-- Beautifull Splash Screen with a simple animation
-- Audio playing when starting as the application tone
-- Notifications (Toasts) with playing song information
-- Firebase based login to create your own account with your personal profile.
+- Beautifull Splash Screen that shows dynamically while the main thread loads it content
+- Startup application tone
+- Notifications (Toasts) showing playing song information
+- Firebase based login and register to create your own account with your personal profile.
 - Automatic data sync 
 - Meet new people in your area with similar music tastes (AOSMap services)
 - Cute widget to quickly get the playing song lyrics

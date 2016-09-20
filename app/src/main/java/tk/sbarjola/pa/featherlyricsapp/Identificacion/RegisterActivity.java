@@ -185,7 +185,6 @@ public class RegisterActivity extends AppCompatActivity implements LocationListe
                         info.setText("Error " + firebaseError.toString().split(":")[1]);
                     }
                 });
-
             }
         });
     }
