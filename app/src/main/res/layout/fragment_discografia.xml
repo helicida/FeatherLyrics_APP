@@ -1,19 +1,15 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/scrollView"
+    android:id="@+id/discografia_scrollViewDiscografia"
     android:layout_alignParentTop="true"
     android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true">
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/discografia_scrollViewDiscografia"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+    android:layout_alignParentStart="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -94,7 +90,5 @@
 
         </RelativeLayout>
 
-    </ScrollView>
-
-</RelativeLayout>
+</android.support.v4.widget.NestedScrollView>
 

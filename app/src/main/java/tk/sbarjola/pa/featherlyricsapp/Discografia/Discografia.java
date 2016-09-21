@@ -2,11 +2,13 @@ package tk.sbarjola.pa.featherlyricsapp.Discografia;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -268,7 +270,6 @@ public class Discografia extends Fragment {
 
                             // Imagen y textView relacionados con el artista
                             ImageView imagenArtista = (ImageView) getView().findViewById(R.id.discografia_artistImage);
-
                             if(resultado.getArtists().getItems().get(0).getPopularity() != null){
                                 datosArtista = "Popularidad: " + resultado.getArtists().getItems().get(0).getPopularity() + "%";
                             }
@@ -287,7 +288,14 @@ public class Discografia extends Fragment {
 
                                 Picasso.with(getContext()).load(URLimagen).fit().centerCrop().into(imagenArtista);
 
-                                ScrollView scrollLetra = (ScrollView) getView().findViewById(R.id.discografia_scrollViewDiscografia);
+                                /*
+                                ImageView iToolbar = (ImageView) getView().findViewById(R.id.backdrop);
+                                Toolbar toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
+                                ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+                                Picasso.with(getContext()).load(URLimagen).fit().centerCrop().into(iToolbar);
+                                */
+
+                                NestedScrollView scrollLetra = (NestedScrollView) getView().findViewById(R.id.discografia_scrollViewDiscografia);
                                 scrollLetra.fullScroll(ScrollView.FOCUS_UP);
                             }
 
