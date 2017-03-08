@@ -119,7 +119,7 @@ public class Discografia extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {  // En caso de pulsar sobre un album
 
                 // Subimos al inicio del ScrollView
-                ScrollView scrollLetra = (ScrollView) getView().findViewById(R.id.discografia_scrollViewDiscografia);
+                NestedScrollView scrollLetra = (NestedScrollView) getView().findViewById(R.id.discografia_scrollViewDiscografia);
                 scrollLetra.fullScroll(ScrollView.FOCUS_UP);
 
                 Item disco = items.get(position);    // Sacamos los discos del elemento que hayamos pulsado
